@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#c9a227">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Skull King">
+<title>☠️ Skull King Scorer</title>
+
+<link rel="manifest" href="./manifest.json">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;-webkit-tap-highlight-color:transparent;height:100%}
+body{
+  background:#0a1628;
+  color:#e8dfc8;
+  font-family:'Crimson Text',Georgia,serif;
+  height:100%;
+  overflow:hidden;
+}
+:root{
+  --navy:#0a1628;
+  --navy-card:#0e1e38;
+  --navy-raised:#162848;
+  --gold:#c9a227;
+  --gold-bright:#f0d060;
+  --gold-dim:rgba(201,162,39,0.22);
+  --gold-dim2:rgba(201,162,39,0.12);
+  --text:#e8dfc8;
+  --text-muted:#9a8a6a;
+  --success:#27ae60;
+  --danger:#c0392b;
+  --border:rgba(201,162,39,0.28);
+  --shadow:0 4px 24px rgba(0,0,0,0.6);
+  --r:13px;
+}
+
+/* ── SCREEN MANAGEMENT ── */
+.screen{display:none;flex-direction:column;height:100vh;height:100dvh;overflow:hidden}
+.screen.active{display:flex}
+
+/* ── TYPOGRAPHY ── */
+.cinzel{font-family:'Cinzel','Times New Roman',serif}
+
+/* ── APP HEADER ── */
+.hdr{
+  background:linear-gradient(180deg,#050d1e 0%,#0a1628 100%);
+  border-bottom:1.5px solid var(--gold-dim);
+  padding:14px 18px;
+  text-align:center;
+  position:sticky;top:0;z-index:100;
+  flex-shrink:0;
+}
+.hdr h1{font-family:'Cinzel',serif;font-size:1.35rem;color:var(--gold-bright);
+  text-shadow:0 0 22px rgba(240,208,96,0.4);letter-spacing:2px}
+.hdr-sub{font-size:0.82rem;color:var(--text-muted);margin-top:2px}
+
+/* ── SCROLL CONTENT ── */
+.content{
+  flex:1;
+  min-height:0;
+  padding:18px 15px;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;
+}
+
+/* ── CARDS ── */
+.card{
+  background:var(--navy-card);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:15px;
+  margin-bottom:12px;
+}
+.card-title{
+  font-family:'Cinzel',serif;font-size:0.82rem;color:var(--gold);
+  letter-spacing:1px;margin-bottom:12px;text-transform:uppercase;
+}
+
+/* ── BUTTONS ── */
+button{touch-action:manipulation;font-family:inherit;cursor:pointer}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  padding:13px 22px;border-radius:var(--r);border:none;
+  font-family:'Cinzel',serif;font-size:0.95rem;font-weight:700;
+  letter-spacing:0.8px;min-height:50px;transition:all 0.13s;
+  -webkit-tap-highlight-color:transparent;
+}
+.btn:active{transform:scale(0.97)}
+.btn-primary{
+  background:linear-gradient(135deg,#c9a227,#f0d060);
+  color:#0a1628;width:100%;font-size:1.05rem;
+  box-shadow:0 4px 18px rgba(201,162,39,0.3);
+}
+.btn-primary:active{background:linear-gradient(135deg,#b8941f,#d4b840)}
+.btn-primary:disabled{opacity:0.4;cursor:not-allowed}
+.btn-ghost{
+  background:rgba(255,255,255,0.05);color:var(--text);
+  border:1px solid rgba(255,255,255,0.1);
+}
+.btn-ghost:active{background:rgba(255,255,255,0.1)}
+.btn-sm{padding:9px 16px;font-size:0.78rem;min-height:40px}
+.btn-danger-outline{
+  background:transparent;color:var(--danger);
+  border:1px solid rgba(192,57,43,0.4);
+}
+
+/* ── SEGMENT CONTROL ── */
+.seg{
+  display:flex;background:rgba(0,0,0,0.32);
+  border-radius:10px;padding:3px;gap:3px;
+}
+.seg-btn{
+  flex:1;padding:10px 6px;border-radius:8px;border:none;
+  background:transparent;color:var(--text-muted);
+  font-family:'Cinzel',serif;font-size:0.78rem;
+  letter-spacing:0.5px;min-height:44px;transition:all 0.18s;
+}
+.seg-btn.on{
+  background:linear-gradient(135deg,#c9a227,#f0d060);
+  color:#0a1628;font-weight:700;
+}
+
+/* ── STEPPER ── */
+.stepper{
+  display:flex;align-items:center;
+  background:rgba(0,0,0,0.3);border:1px solid var(--border);
+  border-radius:12px;overflow:hidden;
+}
+.step-btn{
+  width:56px;height:56px;border:none;background:transparent;
+  color:var(--gold);font-size:1.7rem;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:background 0.1s;
+}
+.step-btn:active{background:rgba(201,162,39,0.15)}
+.step-val{
+  flex:1;text-align:center;
+  font-family:'Cinzel',serif;font-size:1.9rem;font-weight:700;
+  color:var(--text);user-select:none;
+}
+
+/* ── INPUTS ── */
+.lbl{display:block;font-size:0.8rem;color:var(--text-muted);
+  margin-bottom:6px;font-family:'Cinzel',serif;letter-spacing:0.4px}
+input[type=text]{
+  width:100%;background:rgba(255,255,255,0.06);
+  border:1.5px solid var(--border);border-radius:10px;
+  color:var(--text);font-family:'Crimson Text',Georgia,serif;
+  font-size:1.1rem;padding:12px 13px;outline:none;
+  transition:border-color 0.18s;
+}
+input[type=text]:focus{border-color:var(--gold)}
+input[type=text]::placeholder{color:var(--text-muted)}
+
+/* ── SETUP SCREEN ── */
+.logo{text-align:center;padding:28px 0 22px}
+.logo .skull{font-size:3.5rem;display:inline-block}
+.logo h1{font-family:'Cinzel',serif;font-size:2rem;color:var(--gold-bright);
+  letter-spacing:3px;text-shadow:0 0 30px rgba(240,208,96,0.4);margin-top:6px}
+.logo .sub{font-style:italic;color:var(--text-muted);font-size:0.95rem;margin-top:3px}
+.mode-desc{font-size:0.82rem;color:var(--text-muted);font-style:italic;
+  text-align:center;margin-top:9px;line-height:1.45;padding:0 4px}
+
+.player-row{display:flex;gap:8px;align-items:center;margin-bottom:9px}
+.player-icon{font-size:1.3rem;width:28px;text-align:center;flex-shrink:0}
+.rm-btn{
+  width:38px;height:38px;border-radius:50%;border:1px solid rgba(192,57,43,0.35);
+  background:transparent;color:var(--danger);font-size:1.2rem;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.add-remove-row{display:flex;gap:10px;justify-content:center;margin-top:10px}
+
+/* ── BID SCREEN ── */
+.bid-intro{text-align:center;padding:4px 0 14px}
+.bid-cards-lbl{font-family:'Cinzel',serif;font-size:0.95rem;color:var(--gold)}
+.bid-card{
+  background:var(--navy-card);border:1px solid var(--border);
+  border-radius:var(--r);padding:13px 15px;margin-bottom:10px;
+  display:flex;align-items:center;gap:12px;
+}
+.bid-card-icon{font-size:1.3rem;flex-shrink:0}
+.bid-card-name{
+  font-family:'Cinzel',serif;font-size:1rem;color:var(--text);
+  flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowraw;
+}
+.bid-mini-stepper{
+  display:flex;align-items:center;
+  background:rgba(0,0,0,0.3);border:1px solid var(--border);
+  border-radius:10px;overflow:hidden;flex-shrink:0;
+}
+.bid-mini-btn{
+  width:44px;height:44px;border:none;background:transparent;
+  color:var(--gold);font-size:1.5rem;
+  display:flex;align-items:center;justify-content:center;
+  transition:background 0.1s;
+}
+.bid-mini-btn:active{background:rgba(201,162,39,0.15)}
+.bid-mini-val{
+  width:40px;text-align:center;
+  font-family:'Cinzel',serif;font-size:1.35rem;font-weight:700;
+  color:var(--text);user-select:none;
+}
+
+/* ── SCORE SCREEN ── */
+.ptabs{
+  display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;
+  margin-bottom:14px;scrollbar-width:none;
+}
+.ptabs::-webkit-scrollbar{display:none}
+.ptab{
+  flex-shrink:0;padding:8px 14px;border-radius:20px;
+  border:1px solid var(--border);background:transparent;
+  color:var(--text-muted);font-family:'Cinzel',serif;
+  font-size:0.75rem;transition:all 0.18s;
+}
+.ptab.on{background:var(--gold-dim);border-color:var(--gold);color:var(--gold-bright)}
+
+.psc-card{
+  border:1.5px solid var(--border);border-radius:var(--r);
+  padding:15px;margin-bottom:12px;background:var(--navy-card);
+}
+.psc-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.psc-name{font-family:'Cinzel',serif;font-size:1.05rem;color:var(--text)}
+.psc-bid{
+  font-size:0.88rem;color:var(--text-muted);
+  background:rgba(0,0,0,0.3);border-radius:20px;padding:4px 12px;
+}
+.psc-bid b{color:var(--gold)}
+.sec-lbl{
+  font-size:0.75rem;color:var(--text-muted);font-family:'Cinzel',serif;
+  letter-spacing:0.5px;margin-bottom:8px;text-transform:uppercase;
+}
+.preview-box{
+  text-align:center;margin-top:14px;
+  padding:12px;background:rgba(0,0,0,0.2);border-radius:10px;
+}
+.preview-lbl{font-size:0.8rem;color:var(--text-muted);margin-bottom:4px}
+.preview-val{font-family:'Cinzel',serif;font-size:1.45rem;font-weight:700}
+.preview-note{font-size:0.78rem;color:var(--text-muted);margin-top:3px}
+
+/* ── BONUS GRID ── */
+.bonus-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.bonus-item{
+  background:rgba(0,0,0,0.22);border:1px solid var(--border);
+  border-radius:10px;padding:10px 8px;
+  display:flex;flex-direction:column;align-items:center;gap:5px;
+}
+.bonus-lbl{font-size:0.73rem;color:var(--text-muted);line-height:1.25;text-align:center}
+.bonus-pts{font-family:'Cinzel',serif;font-size:0.76rem;color:var(--gold)}
+.bonus-row{display:flex;align-items:center;justify-content:center;gap:9px}
+.bbonus-btn{
+  width:36px;height:36px;border-radius:50%;
+  border:1.5px solid var(--gold-dim);background:transparent;color:var(--gold);
+  font-size:1.25rem;display:flex;align-items:center;justify-content:center;
+  transition:background 0.1s;
+}
+.bbonus-btn:active{background:var(--gold-dim)}
+.bbonus-cnt{
+  font-family:'Cinzel',serif;font-size:1.1rem;font-weight:700;
+  color:var(--text);min-width:22px;text-align:center;
+}
+
+/* ── SCOREBOARD ── */
+.res-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.05);
+}
+.res-row:last-child{border-bottom:none}
+.res-name{font-size:1rem;font-weight:600}
+.res-detail{font-size:0.78rem;color:var(--text-muted);margin-top:2px}
+.res-sc{font-family:'Cinzel',serif;font-size:1.2rem;font-weight:700}
+.res-tot{font-size:0.78rem;color:var(--text-muted);text-align:right}
+.badge-hit{
+  display:inline-block;padding:2px 8px;border-radius:10px;font-size:0.75rem;font-weight:600;
+  background:rgba(39,174,96,0.18);color:var(--success);margin-left:6px;
+}
+.badge-miss{
+  display:inline-block;padding:2px 8px;border-radius:10px;font-size:0.75rem;font-weight:600;
+  background:rgba(192,57,43,0.18);color:var(--danger);margin-left:6px;
+}
+.pos-green{color:var(--success)}
+.pos-red{color:var(--danger)}
+.pos-muted{color:var(--text-muted)}
+
+/* ── STANDINGS TABLE ── */
+.stbl{width:100%;border-collapse:collapse;font-size:0.9rem}
+.stbl th{
+  font-family:'Cinzel',serif;font-size:0.7rem;color:var(--gold);
+  text-transform:uppercase;letter-spacing:0.8px;padding:7px 5px;
+  border-bottom:1px solid var(--border);text-align:center;
+}
+.stbl th:nth-child(2){text-align:left}
+.stbl td{padding:9px 5px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center}
+.stbl td:nth-child(2){text-align:left;font-weight:600}
+.stbl tr:last-child td{border-bottom:none}
+.stbl-tot{font-family:'Cinzel',serif;font-weight:700;color:var(--gold-bright);font-size:0.95rem}
+.stbl-pos{font-size:0.78rem;color:var(--text-muted);font-family:'Cinzel',serif}
+
+/* ── FINAL SCREEN ── */
+.winner-box{
+  text-align:center;padding:28px 18px;
+  background:linear-gradient(135deg,rgba(201,162,39,0.1),rgba(201,162,39,0.04));
+  border:1.5px solid var(--gold-dim);border-radius:18px;margin-bottom:18px;
+}
+.w-crown{font-size:2.8rem;margin-bottom:6px}
+.w-label{
+  font-family:'Cinzel',serif;font-size:0.78rem;
+  letter-spacing:2px;color:var(--text-muted);
+}
+.w-name{
+  font-family:'Cinzel',serif;font-size:1.75rem;font-weight:900;
+  color:var(--gold-bright);text-shadow:0 0 28px rgba(240,208,96,0.5);
+  margin-top:4px;
+}
+.w-score{font-size:1rem;color:var(--text-muted);margin-top:5px}
+
+/* ── MISC UTILS ── */
+.divider{height:1px;background:var(--border);margin:14px 0}
+.pill{
+  display:inline-block;background:var(--gold-dim2);border:1px solid var(--gold-dim);
+  border-radius:20px;padding:4px 13px;font-family:'Cinzel',serif;
+  font-size:0.78rem;color:var(--gold);letter-spacing:1px;
+}
+.mt4{margin-top:4px}.mt8{margin-top:8px}.mt12{margin-top:12px}
+.mt16{margin-top:16px}.mt20{margin-top:20px}.mb12{margin-bottom:12px}
+.tc{text-align:center}.safe{height:28px}
+
+/* ── ANIMATIONS ── */
+@keyframes sway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+.sway{animation:sway 3s ease-in-out infinite;display:inline-block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.fadein{animation:fadeUp 0.3s ease forwards}
+
+/* ── TOAST ── */
+.toast{
+  position:fixed;bottom:76px;left:50%;
+  transform:translateX(-50%) translateY(90px);
+  background:rgba(14,28,54,0.96);border:1px solid var(--gold-dim);
+  border-radius:20px;padding:9px 20px;font-size:0.88rem;color:var(--text);
+  transition:transform 0.28s,opacity 0.28s;opacity:0;z-index:999;
+  white-space:nowrap;box-shadow:var(--shadow);pointer-events:none;
+}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+/* ── SCORE ROWS (all-players view) ── */
+.sc-row{
+  background:var(--navy-card);border:1px solid var(--border);
+  border-radius:var(--r);padding:13px 14px;margin-bottom:10px;
+}
+.sc-row-top{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.sc-row-icon{font-size:1.2rem;flex-shrink:0}
+.sc-row-name{
+  font-family:'Cinzel',serif;font-size:0.95rem;color:var(--text);
+  flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.sc-row-bid{
+  font-size:0.8rem;color:var(--text-muted);
+  background:rgba(0,0,0,0.3);border-radius:12px;padding:3px 10px;
+  flex-shrink:0;white-space:nowrap;
+}
+.sc-row-bid b{color:var(--gold)}
+.sc-row-bottom{display:flex;align-items:center;gap:8px}
+.sc-mini-stepper{
+  display:flex;align-items:center;
+  background:rgba(0,0,0,0.3);border:1px solid var(--border);
+  border-radius:10px;overflow:hidden;flex-shrink:0;
+}
+.sc-mini-btn{
+  width:42px;height:42px;border:none;background:transparent;
+  color:var(--gold);font-size:1.4rem;
+  display:flex;align-items:center;justify-content:center;transition:background 0.1s;
+}
+.sc-mini-btn:active{background:rgba(201,162,39,0.15)}
+.sc-mini-val{
+  width:36px;text-align:center;
+  font-family:'Cinzel',serif;font-size:1.25rem;font-weight:700;
+  color:var(--text);user-select:none;
+}
+.sc-bonus-btn{
+  flex:1;min-height:42px;padding:0 10px;
+  border:1px solid var(--border);border-radius:10px;
+  background:rgba(0,0,0,0.2);color:var(--text-muted);
+  font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.3px;
+  display:flex;align-items:center;justify-content:center;gap:5px;
+  transition:all 0.15s;
+}
+.sc-bonus-btn.has-bonus{border-color:var(--gold-dim);color:var(--gold);background:var(--gold-dim2)}
+.sc-bonus-btn:active{background:var(--gold-dim)}
+.sc-preview{
+  font-family:'Cinzel',serif;font-size:1rem;font-weight:700;
+  flex-shrink:0;min-width:48px;text-align:right;
+}
+
+/* ── BONUS BOTTOM SHEET ── */
+.bonus-sheet{
+  position:fixed;inset:0;z-index:300;
+  background:rgba(0,0,0,0.65);
+  display:flex;flex-direction:column;justify-content:flex-end;
+  opacity:0;pointer-events:none;
+  transition:opacity 0.22s;
+  -webkit-tap-highlight-color:transparent;
+}
+.bonus-sheet.open{opacity:1;pointer-events:all}
+.bonus-sheet-panel{
+  background:#0e1e38;
+  border-radius:20px 20px 0 0;
+  border-top:1.5px solid var(--gold-dim);
+  padding:12px 16px 24px;
+  max-height:88vh;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  transform:translateY(100%);
+  transition:transform 0.28s cubic-bezier(0.32,0.72,0,1);
+}
+.bonus-sheet.open .bonus-sheet-panel{transform:translateY(0)}
+.sheet-handle{
+  width:40px;height:4px;border-radius:2px;
+  background:rgba(255,255,255,0.18);margin:0 auto 14px;
+}
+.sheet-title{
+  font-family:'Cinzel',serif;font-size:1rem;color:var(--gold-bright);
+  text-align:center;margin-bottom:3px;
+}
+.sheet-note{font-size:0.8rem;color:var(--text-muted);text-align:center;margin-bottom:14px}
+
+/* ── EDIT SCREEN ── */
+.edit-banner{
+  background:rgba(201,162,39,0.1);border:1px solid var(--gold-dim);
+  border-radius:10px;padding:11px 14px;margin-bottom:14px;
+  display:flex;align-items:flex-start;gap:10px;
+}
+.edit-banner-icon{font-size:1.2rem;flex-shrink:0;margin-top:1px}
+.edit-banner-text{font-size:0.88rem;color:var(--gold);line-height:1.4}
+.edit-banner-text b{font-family:'Cinzel',serif;font-size:0.92rem}
+.edit-banner-text small{color:var(--text-muted);font-size:0.8rem}
+
+.past-rounds-card .card-title{margin-bottom:10px}
+.round-btns{display:flex;flex-wrap:wrap;gap:8px}
+.round-btn{
+  padding:9px 16px;border-radius:10px;
+  border:1px solid var(--border);background:var(--navy-card);
+  color:var(--text);font-family:'Cinzel',serif;font-size:0.82rem;
+  cursor:pointer;transition:all 0.15s;
+}
+.round-btn:active{background:var(--gold-dim);border-color:var(--gold);color:var(--gold-bright)}
+
+/* ── CONFIRM DIALOG ── */
+.overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,0.7);z-index:500;
+  align-items:center;justify-content:center;padding:20px;
+}
+.overlay.show{display:flex}
+.dialog{
+  background:#0e1e38;border:1.5px solid var(--border);
+  border-radius:18px;padding:24px 20px;max-width:340px;width:100%;
+  text-align:center;
+}
+.dialog h3{font-family:'Cinzel',serif;color:var(--gold-bright);margin-bottom:10px;font-size:1.1rem}
+.dialog p{font-size:0.95rem;color:var(--text-muted);line-height:1.4;margin-bottom:18px}
+.dialog-btns{display:flex;gap:10px}
+.dialog-btns .btn{flex:1;min-height:46px}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!--  SCREEN: SETUP                                         -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div id="s-setup" class="screen active">
+  <div class="content">
+    <div class="logo">
+      <div class="skull sway">☠️</div>
+      <h1>SKULL KING</h1>
+      <div class="sub">Score Keeper</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⚔️ Scoring Mode</div>
+      <div class="seg" id="mode-seg">
+        <button class="seg-btn on" onclick="selMode('classic')">Classic</button>
+        <button class="seg-btn" onclick="selMode('rascal')">Rascal</button>
+      </div>
+      <div class="mode-desc" id="mode-desc"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🌊 Number of Rounds</div>
+      <div class="stepper">
+        <button class="step-btn" onclick="chRounds(-1)">−</button>
+        <div class="step-val" id="rnds-val">10</div>
+        <button class="step-btn" onclick="chRounds(1)">+</button>
+      </div>
+      <div class="mt8 tc" style="font-size:0.82rem;color:var(--text-muted)">1 – 10 rounds · standard game is 10</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🏴‍☠️ Players <span style="color:var(--text-muted);font-size:0.8rem;font-family:inherit;font-weight:400;letter-spacing:0">(2 – 6)</span></div>
+      <div id="plist"></div>
+      <div class="add-remove-row">
+        <button class="btn btn-ghost btn-sm" id="btn-rm" onclick="rmPlayer()">− Remove</button>
+        <button class="btn btn-ghost btn-sm" id="btn-add" onclick="addPlayer()">+ Add Player</button>
+      </div>
+    </div>
+
+    <button class="btn btn-primary mt16" onclick="startGame()">⚓ Set Sail!</button>
+    <div class="safe"></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!--  SCREEN: BID                                           -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div id="s-bid" class="screen">
+  <div class="hdr">
+    <h1>SKULL KING</h1>
+    <div class="hdr-sub" id="bid-badge">Round 1 of 10</div>
+  </div>
+  <div class="content">
+    <div class="tc mb12">
+      <span class="pill" id="bid-pill">ROUND 1</span>
+    </div>
+    <div class="bid-intro">
+      <div class="bid-cards-lbl" id="bid-cards-lbl">Cards in hand this round: 1</div>
+      <div style="font-size:0.82rem;color:var(--text-muted);margin-top:5px">Everyone sets their bid, then tap Start Scoring</div>
+    </div>
+    <div id="bid-player-cards"></div>
+    <button class="btn btn-primary mt8" onclick="submitBids()">🁏 Start Scoring</button>
+    <div class="safe"></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!--  SCREEN: SCORE ENTRY                                   -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div id="s-score" class="screen">
+  <div class="hdr">
+    <h1>SKULL KING</h1>
+    <div class="hdr-sub" id="sc-badge">Round 1 — Enter Scores</div>
+  </div>
+  <div class="content">
+    <div class="mb12"><span class="pill" id="sc-pill">ROUND 1</span></div>
+    <div id="sc-panels"></div>
+    <button class="btn btn-primary mt12" onclick="calcScores()">⚓ Calculate Scores</button>
+    <div class="safe"></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!--  SCREEN: ROUND SCOREBOARD                              -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div id="s-board" class="screen">
+  <div class="hdr">
+    <h1>SKULL KING</h1>
+    <div class="hdr-sub" id="board-badge">After Round 1</div>
+  </div>
+  <div class="content">
+    <div class="card">
+      <div class="card-title">🗡️ Round Results</div>
+      <div id="round-res"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">📊 Standings</div>
+      <div style="overflow-x:auto">
+        <table class="stbl" id="standings"></table>
+      </div>
+    </div>
+    <div class="card past-rounds-card" id="edit-rounds-card" style="display:none">
+      <div class="card-title">✏️ Fix a Past Round</div>
+      <div class="round-btns" id="edit-round-btns"></div>
+    </div>
+    <button class="btn btn-primary mt12" onclick="nextRound()" id="btn-next">⛵ Next Round</button>
+    <div style="margin-top:10px">
+      <button class="btn btn-ghost" style="width:100%;font-size:0.82rem" onclick="confirmNewGame()">↩ New Game</button>
+    </div>
+    <div class="safe"></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!--  SCREEN: FINAL                                         -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div id="s-final" class="screen">
+  <div class="hdr">
+    <h1>SKULL KING</h1>
+    <div class="hdr-sub">Game Complete</div>
+  </div>
+  <div class="content">
+    <div class="winner-box fadein">
+      <div class="w-crown sway">👑</div>
+      <div class="w-label">SKULL KING</div>
+      <div class="w-name" id="w-name">—</div>
+      <div class="w-score" id="w-score">with 0 points</div>
+    </div>
+    <div class="card">
+      <div class="card-title">📊 Final Standings</div>
+      <table class="stbl" id="final-stbl"></table>
+    </div>
+    <div class="card">
+      <div class="card-title">📈 Round History</div>
+      <div id="final-hist" style="overflow-x:auto"></div>
+    </div>
+    <div class="card past-rounds-card">
+      <div class="card-title">✏️ Fix a Past Round</div>
+      <div class="round-btns" id="edit-round-btns-final"></div>
+    </div>
+    <button class="btn btn-primary mt8" onclick="confirmNewGame()">🔄 New Game</button>
+    <div class="safe"></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!--  SCREEN: EDIT PAST ROUND                               -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div id="s-edit" class="screen">
+  <div class="hdr">
+    <h1>SKULL KING</h1>
+    <div class="hdr-sub" id="edit-badge">Editing Round 1</div>
+  </div>
+  <div class="content">
+    <div class="edit-banner">
+      <div class="edit-banner-icon">✏️</div>
+      <div class="edit-banner-text">
+        <b id="edit-title">Editing Round 1</b><br>
+        <small id="edit-cards-note">1 card was dealt this round</small>
+      </div>
+    </div>
+    <div class="ptabs" id="edit-ptabs"></div>
+    <div id="edit-panels"></div>
+    <button class="btn btn-primary mt12" onclick="saveEditRound()">✅ Save Changes</button>
+    <button class="btn btn-ghost mt8" style="width:100%" onclick="cancelEdit()">✗ Cancel</button>
+    <div class="safe"></div>
+  </div>
+</div>
+
+<!-- ── BONUS BOTTOM SHEET ── -->
+<div class="bonus-sheet" id="bonus-sheet" onclick="handleSheetBgClick(event)">
+  <div class="bonus-sheet-panel">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title" id="bonus-sheet-title">Bonuses</div>
+    <div class="sheet-note" id="bonus-sheet-note"></div>
+    <div class="bonus-grid" id="bonus-sheet-grid"></div>
+    <div class="preview-box" style="margin-top:14px">
+      <div class="preview-lbl">Score Preview</div>
+      <div class="preview-val" id="sheet-preview-val">—</div>
+      <div class="preview-note" id="sheet-preview-note"></div>
+    </div>
+    <button class="btn btn-primary" style="margin-top:14px" onclick="closeBonusSheet()">✓ Done</button>
+  </div>
+</div>
+
+<!-- ── CONFIRM DIALOG ── -->
+<div class="overlay" id="confirm-overlay">
+  <div class="dialog">
+    <h3>⚓ New Game?</h3>
+    <p>This will end the current game. All scores will be lost.</p>
+    <div class="dialog-btns">
+      <button class="btn btn-ghost" onclick="closeConfirm()">Cancel</button>
+      <button class="btn btn-primary" onclick="doNewGame()">New Game</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── TOAST ── -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ╔══════════════════════════════════════════════════════════╗
+// ║  SKULL KING SCORER — v1.0                               ║
+// ╚══════════════════════════════════════════════════════════╝
+
+// ── Bonus definitions ──────────────────────────────────────
+const BONUSES = [
+  {key:'sk',    label:'☠️ Skull King Captured',        pts:50, max:1},
+  {key:'psk',   label:'🏴 Pirate Captured by SK',      pts:30, max:5},
+  {key:'msk',   label:'🧜 Mermaid Captures SK',         pts:40, max:2},
+  {key:'mp',    label:'🐚 Mermaid by Pirate',          pts:20, max:2},
+  {key:'b14',   label:'⚑ Black 14 Flag',               pts:20, max:1},
+  {key:'c14',   label:'🏳 Colored 14 Flag (each)',      pts:10, max:3},
+  {key:'r10',   label:'🎲 Rascal Wager +10',            pts:10, max:1},
+  {key:'r20',   label:'🎲 Rascal Wager +20',            pts:20, max:1},
+];
+
+const ICONS = ['🦜','⚓','🗡️','🏴‍☠️','💀','🐚'];
+
+const MODE_DESCS = {
+  classic:'Classic: Hit exact bid → 20pts × tricks bid. Miss → −10pts × tricks off. Zero bid: ±10pts × round. Bonus points only count on a hit.',
+  rascal: 'Rascal: Hit exact bid → 10pts × round. Off by 1 → half points. Off by 2+ → 0pts. Zero bid: ±10pts × round. Bonus points only count on exact hit.',
+};
+
+// ── Game state ─────────────────────────────────────────────
+const G = {
+  mode:'classic', rounds:10,
+  players:[],   // {name, scores[], bids[], tricks[], bonuses[]}
+  round:1,
+  bidIdx:0, tempBids:[],
+  tempTricks:[], tempBonuses:[],
+  scTab:0,
+};
+
+// ── Screen helper ──────────────────────────────────────────
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ── Toast ──────────────────────────────────────────────────
+let _tt;
+function toast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.classList.add('show');
+  clearTimeout(_tt); _tt=setTimeout(()=>el.classList.remove('show'),2600);
+}
+
+// ══════════════════════════════════════════════════════════
+//  SETUP
+// ══════════════════════════════════════════════════════════
+let sPlayers=['',''];
+
+function initSetup(){
+  sPlayers=['',''];
+  G.mode='classic'; G.rounds=10;
+  selMode('classic');
+  document.getElementById('rnds-val').textContent='10';
+  renderPlist();
+}
+
+function renderPlist(){
+  const el=document.getElementById('plist');
+  el.innerHTML='';
+  sPlayers.forEach((n,i)=>{
+    const d=document.createElement('div');
+    d.className='player-row';
+    d.innerHTML=`
+      <span class="player-icon">${ICONS[i]}</span>
+      <input type="text" placeholder="Player ${i+1}" value="${n}"
+        oninput="sPlayers[${i}]=this.value"
+        autocomplete="off" autocorrect="off" spellcheck="false" maxlength="18">
+    `;
+    el.appendChild(d);
+  });
+  document.getElementById('btn-add').disabled=sPlayers.length>=6;
+  document.getElementById('btn-rm').disabled=sPlayers.length<=2;
+}
+
+function addPlayer(){
+  if(sPlayers.length>=6){toast('Max 6 players');return;}
+  sPlayers.push(''); renderPlist();
+}
+function rmPlayer(){
+  if(sPlayers.length<=2){toast('Min 2 players');return;}
+  sPlayers.pop(); renderPlist();
+}
+
+function selMode(m){
+  G.mode=m;
+  document.querySelectorAll('#mode-seg .seg-btn').forEach((b,i)=>{
+    b.classList.toggle('on',(i===0&&m==='classic')||(i===1&&m==='rascal'));
+  });
+  document.getElementById('mode-desc').textContent=MODE_DESCS[m];
+}
+
+function chRounds(d){
+  G.rounds=Math.max(1,Math.min(10,G.rounds+d));
+  document.getElementById('rnds-val').textContent=G.rounds;
+}
+
+function startGame(){
+  // Sync any names that were typed (redundant but safe)
+  document.querySelectorAll('#plist input').forEach((inp,i)=>{sPlayers[i]=inp.value});
+  const names=sPlayers.map((n,i)=>n.trim()||`Player ${i+1}`);
+  G.players=names.map(name=>({name,scores:[],bids:[],tricks:[],bonuses:[],bonusData:[]}));
+  G.round=1;
+  startRound();
+}
+
+// ══════════════════════════════════════════════════════════
+//  ROUND FLOW
+// ══════════════════════════════════════════════════════════
+function startRound(){
+  const n=G.players.length;
+  G.tempBids=new Array(n).fill(0);
+  G.tempTricks=new Array(n).fill(0);
+  G.tempBonuses=G.players.map(()=>Object.fromEntries(BONUSES.map(b=>[b.key,0])));
+  showBidScreen();
+}
+
+// ══════════════════════════════════════════════════════════
+//  BID SCREEN
+// ══════════════════════════════════════════════════════════
+function showBidScreen(){
+  document.getElementById('bid-badge').textContent=`Round ${G.round} of ${G.rounds}`;
+  document.getElementById('bid-pill').textContent=`ROUND ${G.round}`;
+  document.getElementById('bid-cards-lbl').textContent=`Cards in hand this round: ${G.round}`;
+  renderBidCards();
+  show('s-bid');
+}
+
+function renderBidCards(){
+  const el=document.getElementById('bid-player-cards');
+  el.innerHTML='';
+  G.players.forEach((p,i)=>{
+    const div=document.createElement('div');
+    div.className='bid-card fadein';
+    div.innerHTML=`
+      <span class="bid-card-icon">${ICONS[i]}</span>
+      <span class="bid-card-name">${p.name}</span>
+      <div class="bid-mini-stepper">
+        <button class="bid-mini-btn" onclick="chBid(${i},-1)">−</button>
+        <div class="bid-mini-val" id="bv-${i}">${G.tempBids[i]}</div>
+        <button class="bid-mini-btn" onclick="chBid(${i},1)">+</button>
+      </div>
+    `;
+    el.appendChild(div);
+  });
+}
+
+function chBid(idx,d){
+  G.tempBids[idx]=Math.max(0,Math.min(G.round,G.tempBids[idx]+d));
+  const el=document.getElementById(`bv-${idx}`);
+  if(el) el.textContent=G.tempBids[idx];
+}
+
+function submitBids(){
+  showScoreScreen();
+}
+
+// ══════════════════════════════════════════════════════════
+//  SCORE ENTRY SCREEN — all players at once
+// ══════════════════════════════════════════════════════════
+function showScoreScreen(){
+  document.getElementById('sc-badge').textContent=`Round ${G.round} — Enter Scores`;
+  document.getElementById('sc-pill').textContent=`ROUND ${G.round}`;
+  renderAllScoreRows();
+  show('s-score');
+}
+
+function renderAllScoreRows(){
+  const el=document.getElementById('sc-panels');
+  el.innerHTML='';
+  G.players.forEach((p,i)=>{
+    const div=document.createElement('div');
+    div.className='sc-row fadein';
+    div.innerHTML=`
+      <div class="sc-row-top">
+        <span class="sc-row-icon">${ICONS[i]}</span>
+        <span class="sc-row-name">${p.name}</span>
+        <span class="sc-row-bid">Bid <b>${G.tempBids[i]}</b></span>
+      </div>
+      <div class="sc-row-bottom">
+        <div class="sc-mini-stepper">
+          <button class="sc-mini-btn" onclick="chTricks(${i},-1)">−</button>
+          <div class="sc-mini-val" id="tv-${i}">${G.tempTricks[i]}</div>
+          <button class="sc-mini-btn" onclick="chTricks(${i},1)">+</button>
+        </div>
+        <button class="sc-bonus-btn" id="bbonus-${i}" onclick="openBonusSheet(${i})">
+          💎 <span id="bbonus-lbl-${i}">Bonuses</span>
+        </button>
+        <div class="sc-preview pos-muted" id="pv-${i}">—</div>
+      </div>
+    `;
+    el.appendChild(div);
+    updatePreview(i);
+  });
+}
+
+// ── Bonus bottom sheet ─────────────────────────────────────
+let _bsIdx=-1;
+
+function openBonusSheet(idx){
+  _bsIdx=idx;
+  const p=G.players[idx];
+  document.getElementById('bonus-sheet-title').textContent=`${ICONS[idx]} ${p.name}`;
+  document.getElementById('bonus-sheet-note').textContent=
+    `Round ${G.round} · Bid: ${G.tempBids[idx]} · Bonuses only count on an exact bid`;
+  document.getElementById('bonus-sheet-grid').innerHTML=BONUSES.map(b=>`
+    <div class="bonus-item">
+      <div class="bonus-lbl">${b.label}</div>
+      <div class="bonus-pts">+${b.pts}${b.max>1?' ea':''}</div>
+      <div class="bonus-row">
+        <button class="bbonus-btn" onclick="chBonus(${idx},'${b.key}',-1,${b.max})">−</button>
+        <div class="bbonus-cnt" id="bc-${idx}-${b.key}">${G.tempBonuses[idx][b.key]}</div>
+        <button class="bbonus-btn" onclick="chBonus(${idx},'${b.key}',1,${b.max})">+</button>
+      </div>
+    </div>
+  `).join('');
+  updateSheetPreview(idx);
+  document.getElementById('bonus-sheet').classList.add('open');
+}
+
+function closeBonusSheet(){
+  document.getElementById('bonus-sheet').classList.remove('open');
+  _bsIdx=-1;
+}
+
+function handleSheetBgClick(e){
+  if(e.target.id==='bonus-sheet') closeBonusSheet();
+}
+
+function updateSheetPreview(idx){
+  const bid=G.tempBids[idx], tricks=G.tempTricks[idx], bonus=totalBonus(idx);
+  const sc=calcScore(bid,tricks,bonus,G.round,G.mode);
+  const hit=bid===tricks;
+  const sign=sc>0?'+':'';
+  const pv=document.getElementById('sheet-preview-val');
+  const pn=document.getElementById('sheet-preview-note');
+  if(pv){
+    pv.textContent=`${sign}${sc}`;
+    pv.style.color=sc>0?'var(--success)':sc<0?'var(--danger)':'var(--text-muted)';
+  }
+  if(pn){
+    if(bonus>0&&hit) pn.textContent=`Includes +${bonus} bonus`;
+    else if(bonus>0&&!hit) pn.textContent='⚠️ Bonus lost — bid missed';
+    else pn.textContent='';
+  }
+}
+
+function chTricks(idx,d){
+  G.tempTricks[idx]=Math.max(0,Math.min(G.round,G.tempTricks[idx]+d));
+  const el=document.getElementById(`tv-${idx}`);
+  if(el) el.textContent=G.tempTricks[idx];
+  updatePreview(idx);
+}
+
+function chBonus(idx,key,d,max){
+  const b=G.tempBonuses[idx];
+  b[key]=Math.max(0,Math.min(max,b[key]+d));
+  const el=document.getElementById(`bc-${idx}-${key}`);
+  if(el) el.textContent=b[key];
+  updatePreview(idx);
+  if(_bsIdx===idx) updateSheetPreview(idx);
+}
+
+function totalBonus(idx){
+  return BONUSES.reduce((s,b)=>s+b.pts*G.tempBonuses[idx][b.key],0);
+}
+
+// ── Core scoring formula ───────────────────────────────────
+function calcScore(bid,tricks,bonus,round,mode){
+  const hit=bid===tricks;
+  if(mode==='classic'){
+    if(hit){
+      return bid===0 ? 10*round+bonus : 20*bid+bonus;
+    } else {
+      return bid===0 ? -10*round : -10*Math.abs(bid-tricks);
+    }
+  } else { // rascal
+    const diff=Math.abs(bid-tricks);
+    if(bid===0){
+      return tricks===0 ? 10*round+bonus : -10*round;
+    }
+    if(diff===0) return 10*round+bonus;
+    if(diff===1) return Math.floor((10*round)/2);
+    return 0;
+  }
+}
+
+function updatePreview(idx){
+  const pv=document.getElementById(`pv-${idx}`);
+  if(!pv) return;
+  const bid=G.tempBids[idx];
+  const tricks=G.tempTricks[idx];
+  const bonus=totalBonus(idx);
+  const sc=calcScore(bid,tricks,bonus,G.round,G.mode);
+  const hit=bid===tricks;
+  const sign=sc>0?'+':'';
+  pv.textContent=`${sign}${sc}`;
+  pv.style.color=sc>0?'var(--success)':sc<0?'var(--danger)':'var(--text-muted)';
+  // optional note element (present in edit screen, absent in score rows)
+  const pn=document.getElementById(`pn-${idx}`);
+  if(pn){
+    if(bonus>0&&hit) pn.textContent=`Includes +${bonus} bonus`;
+    else if(bonus>0&&!hit) pn.textContent='⚠️ Bonus lost — bid missed';
+    else pn.textContent='';
+  }
+  // update the bonus button label in the score row
+  const bBtn=document.getElementById(`bbonus-${idx}`);
+  const bLbl=document.getElementById(`bbonus-lbl-${idx}`);
+  if(bLbl) bLbl.textContent=bonus>0?`+${bonus} pts`:'Bonuses';
+  if(bBtn) bBtn.classList.toggle('has-bonus',bonus>0);
+}
+
+// ══════════════════════════════════════════════════════════
+//  CALCULATE & SAVE SCORES
+// ══════════════════════════════════════════════════════════
+function calcScores(){
+  G.players.forEach((p,idx)=>{
+    const bid=G.tempBids[idx];
+    const tricks=G.tempTricks[idx];
+    const raw={...G.tempBonuses[idx]};
+    const bonus=BONUSES.reduce((s,b)=>s+b.pts*raw[b.key],0);
+    const sc=calcScore(bid,tricks,bonus,G.round,G.mode);
+    p.bids.push(bid);
+    p.tricks.push(tricks);
+    p.bonuses.push(bonus);
+    p.bonusData.push(raw);
+    p.scores.push(sc);
+  });
+  showBoard();
+}
+
+function total(p){return p.scores.reduce((a,b)=>a+b,0)}
+
+// ══════════════════════════════════════════════════════════
+//  ROUND SCOREBOARD
+// ══════════════════════════════════════════════════════════
+function showBoard(){
+  const isLast=G.round>=G.rounds;
+  document.getElementById('board-badge').textContent=`After Round ${G.round}`;
+  document.getElementById('btn-next').textContent=isLast?'🏆 Final Results':'⛵ Next Round';
+
+  const ri=G.round-1;
+
+  // ── Round results (sorted by round score) ──
+  const resEl=document.getElementById('round-res');
+  resEl.innerHTML='';
+  const sorted=[...G.players].sort((a,b)=>b.scores[ri]-a.scores[ri]);
+  sorted.forEach(p=>{
+    const bid=p.bids[ri], tricks=p.tricks[ri], bonus=p.bonuses[ri], sc=p.scores[ri];
+    const hit=bid===tricks;
+    const tot=total(p);
+    const sign=sc>0?'+':'';
+    const cls=sc>0?'pos-green':sc<0?'pos-red':'pos-muted';
+    const bonNote=bonus>0&&hit?` · +${bonus} bonus`:bonus>0&&!hit?' · bonus lost':'';
+    const d=document.createElement('div');
+    d.className='res-row fadein';
+    d.innerHTML=`
+      <div>
+        <div class="res-name">${p.name}</div>
+        <div class="res-detail">Bid ${bid} · Got ${tricks}<span class="${hit?'badge-hit':'badge-miss'}">${hit?'✓ Hit':'✗ Miss'}</span>${bonNote}</div>
+      </div>
+      <div>
+        <div class="res-sc ${cls}">${sign}${sc}</div>
+        <div class="res-tot">Total: ${tot}</div>
+      </div>
+    `;
+    resEl.appendChild(d);
+  });
+
+  // ── Standings table ──
+  buildStandingsTable('standings',ri+1);
+
+  // ── Past rounds edit buttons ──
+  const eCard=document.getElementById('edit-rounds-card');
+  const eBtns=document.getElementById('edit-round-btns');
+  if(ri>0){
+    eCard.style.display='';
+    eBtns.innerHTML='';
+    for(let r=1;r<=G.round;r++){
+      const btn=document.createElement('button');
+      btn.className='round-btn';
+      btn.textContent=`Round ${r}`;
+      btn.onclick=(r=>()=>openEditRound(r,'s-board'))(r);
+      eBtns.appendChild(btn);
+    }
+  } else {
+    eCard.style.display='none';
+  }
+
+  show('s-board');
+}
+
+function buildStandingsTable(id,numRounds){
+  const t=document.getElementById(id);
+  const stand=[...G.players].sort((a,b)=>total(b)-total(a));
+  const rndhdr=Array.from({length:numRounds},(_,i)=>`<th>R${i+1}</th>`).join('');
+  t.innerHTML=`
+    <thead><tr>
+      <th></th><th style="text-align:left">Player</th>
+      ${rndhdr}
+      <th>Total</th>
+    </tr></thead>
+    <tbody>
+    ${stand.map((p,pos)=>{
+      const scCells=Array.from({length:numRounds},(_,i)=>{
+        const s=p.scores[i]??0;
+        const sg=s>0?'+':'';
+        const cl=s>0?'pos-green':s<0?'pos-red':'pos-muted';
+        return `<td class="${cl}">${sg}${s}</td>`;
+      }).join('');
+      const medals=['🥇','🥈','🥉','4.','5.','6.'];
+      return `<tr>
+        <td class="stbl-pos">${pos+1}</td>
+        <td>${medals[pos]||''} ${p.name}</td>
+        ${scCells}
+        <td class="stbl-tot">${total(p)}</td>
+      </tr>`;
+    }).join('')}
+    </tbody>
+  `;
+}
+
+function nextRound(){
+  if(G.round>=G.rounds){ showFinal(); return; }
+  G.round++;
+  startRound();
+}
+
+// ══════════════════════════════════════════════════════════
+//  FINAL SCREEN
+// ══════════════════════════════════════════════════════════
+function showFinal(){
+  const stand=[...G.players].sort((a,b)=>total(b)-total(a));
+  const winner=stand[0];
+  document.getElementById('w-name').textContent=winner.name;
+  document.getElementById('w-score').textContent=`with ${total(winner)} points`;
+
+  // Final standings
+  const ft=document.getElementById('final-stbl');
+  ft.innerHTML=`
+    <thead><tr><th></th><th style="text-align:left">Player</th><th>Score</th></tr></thead>
+    <tbody>${stand.map((p,i)=>{
+      const medals=['🥇','🥈','🥉','4️⃣','5️⃣','6️⃣'];
+      return `<tr>
+        <td class="stbl-pos">${i+1}</td>
+        <td>${medals[i]||''} ${p.name}</td>
+        <td class="stbl-tot">${total(p)}</td>
+      </tr>`;
+    }).join('')}</tbody>
+  `;
+
+  // Round history table
+  const R=G.rounds;
+  const histEl=document.getElementById('final-hist');
+  let rows='';
+  for(let r=0;r<R;r++){
+    rows+=`<tr>
+      <td class="stbl-pos" style="text-align:left;white-space:nowrap">R${r+1}</td>
+      ${G.players.map(p=>{
+        const s=p.scores[r]??0;
+        const sg=s>0?'+':'';
+        const cl=s>0?'pos-green':s<0?'pos-red':'pos-muted';
+        return `<td class="${cl}">${sg}${s}</td>`;
+      }).join('')}
+    </tr>`;
+  }
+  rows+=`<tr style="border-top:2px solid var(--gold-dim)">
+    <td style="text-align:left;font-family:'Cinzel',serif;font-size:0.72rem;color:var(--gold)">TOTAL</td>
+    ${G.players.map(p=>`<td class="stbl-tot">${total(p)}</td>`).join('')}
+  </tr>`;
+
+  histEl.innerHTML=`
+    <table class="stbl">
+      <thead><tr>
+        <th style="text-align:left">Rnd</th>
+        ${G.players.map(p=>`<th>${p.name.length>6?p.name.slice(0,5)+'…':p.name}</th>`).join('')}
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+  `;
+
+  // ── Past rounds edit buttons (final screen) ──
+  const eBtnsF=document.getElementById('edit-round-btns-final');
+  if(eBtnsF){
+    eBtnsF.innerHTML='';
+    for(let r=1;r<=G.rounds;r++){
+      const btn=document.createElement('button');
+      btn.className='round-btn';
+      btn.textContent=`Round ${r}`;
+      btn.onclick=(r=>()=>openEditRound(r,'s-final'))(r);
+      eBtnsF.appendChild(btn);
+    }
+  }
+
+  show('s-final');
+}
+
+// ══════════════════════════════════════════════════════════
+//  EDIT PAST ROUND
+// ══════════════════════════════════════════════════════════
+const E={ri:0,bids:[],tricks:[],bonuses:[],tab:0,from:'s-board'};
+
+function openEditRound(r,from){
+  E.ri=r-1; E.from=from||'s-board'; E.tab=0;
+  const ri=E.ri;
+  E.bids=G.players.map(p=>p.bids[ri]);
+  E.tricks=G.players.map(p=>p.tricks[ri]);
+  E.bonuses=G.players.map(p=>({...p.bonusData[ri]}));
+  const rn=r;
+  document.getElementById('edit-badge').textContent=`Editing Round ${rn}`;
+  document.getElementById('edit-title').textContent=`Editing Round ${rn}`;
+  document.getElementById('edit-cards-note').textContent=
+    `${rn} card${rn>1?'s':''} were dealt this round`;
+  renderEditTabs();
+  renderEditPanel(0);
+  show('s-edit');
+}
+
+function renderEditTabs(){
+  const el=document.getElementById('edit-ptabs');
+  el.innerHTML='';
+  G.players.forEach((p,i)=>{
+    const b=document.createElement('button');
+    b.className='ptab'+(i===E.tab?' on':'');
+    b.textContent=p.name;
+    b.onclick=()=>{
+      E.tab=i;
+      document.querySelectorAll('#edit-ptabs .ptab').forEach((t,j)=>t.classList.toggle('on',j===i));
+      renderEditPanel(i);
+    };
+    el.appendChild(b);
+  });
+}
+
+function renderEditPanel(idx){
+  const p=G.players[idx];
+  const rn=E.ri+1;
+  const bonusRows=BONUSES.map(b=>`
+    <div class="bonus-item">
+      <div class="bonus-lbl">${b.label}</div>
+      <div class="bonus-pts">+${b.pts}${b.max>1?' ea':''}</div>
+      <div class="bonus-row">
+        <button class="bbonus-btn" onclick="chEB(${idx},'${b.key}',-1,${b.max})">−</button>
+        <div class="bbonus-cnt" id="eb-${idx}-${b.key}">${E.bonuses[idx][b.+ey]}</div>
+        <button class="bbonus-btn" onclick="chEB(${idx},'${b.key}',1,${b.max})">+</button>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('edit-panels').innerHTML=`
+    <div class="psc-card fadein">
+      <div class="psc-top">
+        <div class="psc-name">${ICONS[idx]} ${p.name}</div>
+        <div style="font-size:0.8rem;color:var(--text-muted)">Round ${rn}</div>
+      </div>
+      <div class="sec-lbl">Bid (0 – ${rn})</div>
+      <div class="stepper" style="margin-bottom:16px">
+        <button class="step-btn" onclick="chEBid(${idx},-1)">−</button>
+        <div class="step-val" id="eb-bid-${idx}">${E.bids[idx]}</div>
+        <button class="step-btn" onclick="chEBid(${idx},1)">+</button>
+      </div>
+      <div class="sec-lbl">Tricks Won (0 – ${rn})</div>
+      <div class="stepper" style="margin-bottom:16px">
+        <button class="step-btn" onclick="chET(${idx},-1)">−</button>
+        <div class="step-val" id="et-${idx}">${E.tricks[idx]}</div>
+        <button class="step-btn" onclick="chET(${idx},1)">+</button>
+      </div>
+      <div class="sec-lbl">Bonus Points <span style="color:var(--text-muted);font-family:inherit;font-weight:400;text-transform:none;letter-spacing:0">(only count if bid exact)</span></div>
+      <div class="bonus-grid">${bonusRows}</div>
+      <div class="preview-box">
+        <div class="preview-lbl">Score for Round ${rn}</div>
+        <div class="preview-val" id="epv-${idx}">—</div>
+        <div class="preview-note" id="epn-${idx}"></div>
+      </div>
+    </div>
+  `;
+  updateEditPreview(idx);
+}
+
+function chEBid(idx,d){
+  E.bids[idx]=Math.max(0,Math.min(E.ri+1,E.bids[idx]+d));
+  const el=document.getElementById(`eb-bid-${idx}`);
+  if(el) el.textContent=E.bids[idx];
+  updateEditPreview(idx);
+}
+function chET(idx,d){
+  E.tricks[idx]=Math.max(0,Math.min(E.ri+1,E.tricks[idx]+d));
+  const el=document.getElementById(`et-${idx}`);
+  if(el) el.textContent=E.tricks[idx];
+  updateEditPreview(idx);
+}
+function chEB(idx,key,d,max){
+  const b=E.bonuses[idx];
+  b[key]=Math.max(0,Math.min(max,b[key]+d));
+  const el=document.getElementById(`eb-${idx}-${key}`);
+  if(el) el.textContent=b[key];
+  updateEditPreview(idx);
+}
+function totalEB(idx){
+  return BONUSES.reduce((s,b)=>s+b.pts*E.bonuses[idx][b.key],0);
+}
+function updateEditPreview(idx){
+  const pv=document.getElementById(`epv-${idx}`);
+  const pn=document.getElementById(`epn-${idx}`);
+  if(!pv) return;
+  const bid=E.bids[idx], tricks=E.tricks[idx], bonus=totalEB(idx);
+  const sc=calcScore(bid,tricks,bonus,E.ri+1,G.mode);
+  const hit=bid===tricks;
+  const sign=sc>0?'+':'';
+  pv.textContent=`${sign}${sc}`;
+  pv.style.color=sc>0?'var(--success)':sc<0?'var(--danger)':'var(--text-muted)';
+  if(bonus>0&&hit) pn.textContent=`Includes +${bonus} bonus`;
+  else if(bonus>0&&!hit) pn.textContent='⚠️ Bonus lost — bid missed';
+  else pn.textContent='';
+}
+
+function saveEditRound(){
+  const ri=E.ri;
+  G.players.forEach((p,idx)=>{
+    const bid=E.bids[idx];
+    const tricks=E.tricks[idx];
+    const raw={...E.bonuses[idx]};
+    const bonus=BONUSES.reduce((s,b)=>s+b.pts*raw[b.key],0);
+    const sc=calcScore(bid,tricks,bonus,ri+1,G.mode);
+    p.bids[ri]=bid;
+    p.tricks[ri]=tricks;
+    p.bonuses[ri]=bonus;
+    p.bonusData[ri]=raw;
+    p.scores[ri]=sc;
+  });
+  toast('✓ Round updated');
+  if(E.from==='s-final'){ showFinal(); }
+  else { showBoard(); }
+}
+
+function cancelEdit(){
+  show(E.from);
+}
+
+// ══════════════════════════════════════════════════════════
+//  NEW GAME CONFIRM
+// ══════════════════════════════════════════════════════════
+function confirmNewGame(){
+  // If we're on setup or final, just go directly
+  const active=document.querySelector('.screen.active').id;
+  if(active==='s-setup'||active==='s-final'){ doNewGame(); return; }
+  document.getElementById('confirm-overlay').classList.add('show');
+}
+function closeConfirm(){
+  document.getElementById('confirm-overlay').classList.remove('show');
+}
+function doNewGame(){
+  closeConfirm();
+  initSetup();
+  show('s-setup');
+}
+
+// PWA manifest is now external: manifest.json
+
+// ══════════════════════════════════════════════════════════
+//  BOOT
+// ══════════════════════════════════════════════════════════
+initSetup();
+
+// ══════════════════════════════════════════════════════════
+//  SERVICE WORKER REGISTRATION
+// ══════════════════════════════════════════════════════════
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(r => console.log('SW registered', r.scope))
+      .catch(e => console.warn('SW registration failed', e));
+  });
+}
+</script>
+</body>
+</html>
