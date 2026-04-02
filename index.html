@@ -11,7 +11,7 @@
 <title>☠️ Skull King Scorer</title>
 
 <link rel="manifest" href="./manifest.json">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wghht@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:16px;-webkit-tap-highlight-color:transparent;height:100%}
@@ -1218,7 +1218,7 @@ function renderEditPanel(idx){
       <div class="bonus-pts">+${b.pts}${b.max>1?' ea':''}</div>
       <div class="bonus-row">
         <button class="bbonus-btn" onclick="chEB(${idx},'${b.key}',-1,${b.max})">−</button>
-        <div class="bbonus-cnt" id="eb-${idx}-${b.key}">${E.bonuses[idx][b.+ey]}</div>
+        <div class="bbonus-cnt" id="eb-${idx}-${b.key}">${E.bonuses[idx][b.key]}</div>
         <button class="bbonus-btn" onclick="chEB(${idx},'${b.key}',1,${b.max})">+</button>
       </div>
     </div>
