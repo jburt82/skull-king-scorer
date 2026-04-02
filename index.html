@@ -11,7 +11,7 @@
 <title>☠️ Skull King Scorer</title>
 
 <link rel="manifest" href="./manifest.json">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wghht@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:16px;-webkit-tap-highlight-color:transparent;height:100%}
@@ -176,6 +176,42 @@ input[type=text]::placeholder{color:var(--text-muted)}
 }
 .add-remove-row{display:flex;gap:10px;justify-content:center;margin-top:10px}
 
+/* ── SAVED PLAYERS CHIPS ── */
+.saved-chips-wrap{margin-bottom:14px}
+.saved-chips-lbl{font-size:0.72rem;color:var(--gold);letter-spacing:1px;
+  text-transform:uppercase;margin-bottom:8px;font-family:'Cinzel',serif}
+.saved-chips-lbl span{color:var(--text-muted);font-family:'Crimson Text',serif;
+  text-transform:none;letter-spacing:0;font-size:0.78rem}
+.chips-row{display:flex;flex-wrap:wrap;gap:7px;min-height:28px}
+.saved-chip{
+  display:inline-flex;align-items:center;gap:4px;
+  background:var(--navy-raised);border:1px solid var(--border);
+  border-radius:20px;padding:5px 11px 5px 13px;
+  font-size:0.88rem;color:var(--text);font-family:'Crimson Text',serif;
+  cursor:pointer;touch-action:manipulation;transition:all 0.12s;
+}
+.saved-chip:active{background:var(--gold-dim);border-color:var(--gold)}
+.saved-chip.used{opacity:0.4;pointer-events:none}
+.chip-del{
+  color:var(--text-muted);font-size:1rem;line-height:1;
+  width:18px;height:18px;display:flex;align-items:center;justify-content:center;
+  border-radius:50%;flex-shrink:0;
+}
+.chip-del:hover{color:var(--danger);background:rgba(192,57,43,0.18)}
+.no-saved-hint{font-size:0.8rem;color:var(--text-muted);font-style:italic}
+
+/* ── REORDER BUTTONS ── */
+.reorder-col{display:flex;flex-direction:column;gap:3px;flex-shrink:0}
+.reorder-btn{
+  width:30px;height:22px;background:var(--navy-raised);
+  border:1px solid var(--border);border-radius:5px;
+  color:var(--text-muted);font-size:0.65rem;
+  display:flex;align-items:center;justify-content:center;padding:0;
+  touch-action:manipulation;transition:all 0.1s;
+}
+.reorder-btn:active{background:var(--gold-dim);color:var(--gold);border-color:var(--gold)}
+.reorder-btn:disabled{opacity:0.2;pointer-events:none}
+
 /* ── BID SCREEN ── */
 .bid-intro{text-align:center;padding:4px 0 14px}
 .bid-cards-lbl{font-family:'Cinzel',serif;font-size:0.95rem;color:var(--gold)}
@@ -187,7 +223,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
 .bid-card-icon{font-size:1.3rem;flex-shrink:0}
 .bid-card-name{
   font-family:'Cinzel',serif;font-size:1rem;color:var(--text);
-  flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowraw;
+  flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
 .bid-mini-stepper{
   display:flex;align-items:center;
@@ -502,6 +538,10 @@ input[type=text]::placeholder{color:var(--text-muted)}
 
     <div class="card">
       <div class="card-title">🏴‍☠️ Players <span style="color:var(--text-muted);font-size:0.8rem;font-family:inherit;font-weight:400;letter-spacing:0">(2 – 6)</span></div>
+      <div class="saved-chips-wrap">
+        <div class="saved-chips-lbl">Saved Players <span>— tap to add</span></div>
+        <div class="chips-row" id="saved-chips"></div>
+      </div>
       <div id="plist"></div>
       <div class="add-remove-row">
         <button class="btn btn-ghost btn-sm" id="btn-rm" onclick="rmPlayer()">− Remove</button>
@@ -531,7 +571,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
       <div style="font-size:0.82rem;color:var(--text-muted);margin-top:5px">Everyone sets their bid, then tap Start Scoring</div>
     </div>
     <div id="bid-player-cards"></div>
-    <button class="btn btn-primary mt8" onclick="submitBids()">🁏 Start Scoring</button>
+    <button class="btn btn-primary mt8" onclick="submitBids()">🃏 Start Scoring</button>
     <div class="safe"></div>
   </div>
 </div>
@@ -720,6 +760,58 @@ function toast(msg){
 }
 
 // ══════════════════════════════════════════════════════════
+//  SAVED PLAYERS (localStorage)
+// ══════════════════════════════════════════════════════════
+function getSaved(){
+  try{return JSON.parse(localStorage.getItem('skullKingSaved')||'[]');}catch{return [];}
+}
+function setSaved(arr){localStorage.setItem('skullKingSaved',JSON.stringify(arr));}
+
+function renderSavedChips(){
+  const saved=getSaved();
+  const el=document.getElementById('saved-chips');
+  if(!el) return;
+  el.innerHTML='';
+  if(saved.length===0){
+    el.innerHTML='<div class="no-saved-hint">Names you enter will be saved here after a game</div>';
+    return;
+  }
+  // Which names are already in the current lineup
+  const active=new Set(sPlayers.map(n=>n.trim().toLowerCase()).filter(Boolean));
+  saved.forEach((name,i)=>{
+    const btn=document.createElement('button');
+    const isUsed=active.has(name.toLowerCase());
+    btn.className='saved-chip'+(isUsed?' used':'');
+    btn.innerHTML=name+' <span class="chip-del" title="Remove">×</span>';
+    btn.addEventListener('click',(e)=>{
+      if(e.target.classList.contains('chip-del')){
+        e.stopPropagation();
+        const arr=getSaved(); arr.splice(i,1); setSaved(arr); renderSavedChips();
+        return;
+      }
+      if(sPlayers.length>=6){toast('Max 6 players');return;}
+      if(active.has(name.toLowerCase())){toast(name+' already in lineup');return;}
+      sPlayers.push(name);
+      renderPlist();
+      renderSavedChips();
+    });
+    el.appendChild(btn);
+  });
+}
+
+function saveCurrentNames(){
+  // Auto-save any named players (skip defaults like "Player 1")
+  const saved=getSaved();
+  const defaultPat=/^player\s*\d+$/i;
+  sPlayers.forEach(n=>{
+    const name=n.trim();
+    if(!name || defaultPat.test(name)) return;
+    if(!saved.some(s=>s.toLowerCase()===name.toLowerCase())) saved.push(name);
+  });
+  setSaved(saved);
+}
+
+// ══════════════════════════════════════════════════════════
 //  SETUP
 // ══════════════════════════════════════════════════════════
 let sPlayers=['',''];
@@ -730,6 +822,7 @@ function initSetup(){
   selMode('classic');
   document.getElementById('rnds-val').textContent='10';
   renderPlist();
+  renderSavedChips();
 }
 
 function renderPlist(){
@@ -741,8 +834,12 @@ function renderPlist(){
     d.innerHTML=`
       <span class="player-icon">${ICONS[i]}</span>
       <input type="text" placeholder="Player ${i+1}" value="${n}"
-        oninput="sPlayers[${i}]=this.value"
+        oninput="sPlayers[${i}]=this.value;renderSavedChips()"
         autocomplete="off" autocorrect="off" spellcheck="false" maxlength="18">
+      <div class="reorder-col">
+        <button class="reorder-btn" onclick="movePlayer(${i},-1)" ${i===0?'disabled':''}>▲</button>
+        <button class="reorder-btn" onclick="movePlayer(${i},1)" ${i===sPlayers.length-1?'disabled':''}>▼</button>
+      </div>
     `;
     el.appendChild(d);
   });
@@ -750,13 +847,21 @@ function renderPlist(){
   document.getElementById('btn-rm').disabled=sPlayers.length<=2;
 }
 
+function movePlayer(idx,dir){
+  const ni=idx+dir;
+  if(ni<0||ni>=sPlayers.length) return;
+  [sPlayers[idx],sPlayers[ni]]=[sPlayers[ni],sPlayers[idx]];
+  renderPlist();
+  renderSavedChips();
+}
+
 function addPlayer(){
   if(sPlayers.length>=6){toast('Max 6 players');return;}
-  sPlayers.push(''); renderPlist();
+  sPlayers.push(''); renderPlist(); renderSavedChips();
 }
 function rmPlayer(){
   if(sPlayers.length<=2){toast('Min 2 players');return;}
-  sPlayers.pop(); renderPlist();
+  sPlayers.pop(); renderPlist(); renderSavedChips();
 }
 
 function selMode(m){
@@ -775,6 +880,7 @@ function chRounds(d){
 function startGame(){
   // Sync any names that were typed (redundant but safe)
   document.querySelectorAll('#plist input').forEach((inp,i)=>{sPlayers[i]=inp.value});
+  saveCurrentNames();
   const names=sPlayers.map((n,i)=>n.trim()||`Player ${i+1}`);
   G.players=names.map(name=>({name,scores:[],bids:[],tricks:[],bonuses:[],bonusData:[]}));
   G.round=1;
