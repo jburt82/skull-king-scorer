@@ -240,7 +240,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
 .bid-card-icon{font-size:1.3rem;flex-shrink:0}
 .bid-card-name{
   font-family:'Cinzel',serif;font-size:1rem;color:var(--text);
-  flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowraw;
+  flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
 .bid-mini-stepper{
   display:flex;align-items:center;
@@ -319,7 +319,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
   color:var(--text);min-width:22px;text-align:center;
 }
 
-/* ── SCOREBOARD ── */
+/* ── SCOREBOARD Vu2500─ */
 .res-row{
   display:flex;justify-content:space-between;align-items:center;
   padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.05);
@@ -354,6 +354,43 @@ input[type=text]::placeholder{color:var(--text-muted)}
 .stbl tr:last-child td{border-bottom:none}
 .stbl-tot{font-family:'Cinzel',serif;font-weight:700;color:var(--gold-bright);font-size:0.95rem}
 .stbl-pos{font-size:0.78rem;color:var(--text-muted);font-family:'Cinzel',serif}
+
+/* ── RICH SCROLLABLE STANDINGS ── */
+.stbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.stbl-wrap .stbl{width:auto;min-width:100%;border-collapse:collapse}
+/* sticky left cols */
+.stbl-wrap .stbl-s-pos{
+  position:sticky;left:0;z-index:3;background:var(--navy-card);
+  width:28px;min-width:28px;
+}
+.stbl-wrap .stbl-s-name{
+  position:sticky;left:28px;z-index:3;background:var(--navy-card);
+  min-width:90px;max-width:130px;
+}
+/* sticky right col */
+.stbl-wrap .stbl-s-tot{
+  position:sticky;right:0;z-index:3;background:var(--navy-card);
+  min-width:56px;border-left:1px solid var(--border);
+}
+/* round column header */
+.stbl-rnd-hdr{min-width:100px;white-space:nowrap}
+.stbl-edit-btn{
+  background:none;border:none;cursor:pointer;color:var(--text-muted);
+  font-size:0.8rem;padding:0 2px;margin-left:3px;vertical-align:middle;
+  line-height:1;transition:color 0.15s;
+}
+.stbl-edit-btn:hover,.stbl-edit-btn:active{color:var(--gold)}
+/* rich round cell */
+.stbl-cell{padding:8px 7px;vertical-align:top;min-width:100px}
+.stbl-cell-sc{
+  font-family:'Cinzel',serif;font-size:1.05rem;font-weight:700;line-height:1;
+}
+.stbl-cell-detail{
+  font-size:0.7rem;color:var(--text-muted);margin-top:4px;white-space:nowrap;
+}
+.stbl-cell-bonus{font-size:0.68rem;margin-top:2px}
+.stbl-cell-bonus.earned{color:var(--gold)}
+.stbl-cell-bonus.lost{color:var(--text-muted)}
 
 /* ── FINAL SCREEN ── */
 .winner-box{
@@ -401,7 +438,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
 }
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 
-/* ── SCORE ROW (all-players view) ── */
+/* ── SCORE ROWS (all-players view) ── */
 .sc-row{
   background:var(--navy-card);border:1px solid var(--border);
   border-radius:var(--r);padding:13px 14px;margin-bottom:10px;
@@ -459,7 +496,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
   transition:opacity 0.22s;
   -webkit-tap-highlight-color:transparent;
 }
-.bonus-sheet.open{mopacity:1;pointer-events:all}
+.bonus-sheet.open{opacity:1;pointer-events:all}
 .bonus-sheet-panel{
   background:#0e1e38;
   border-radius:20px 20px 0 0;
@@ -523,7 +560,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ════════════════════════════════════════════════════════ -->
 <!--  SCREEN: SETUP                                         -->
 <!-- ════════════════════════════════════════════════════════ -->
 <div id="s-setup" class="screen active">
@@ -618,18 +655,10 @@ input[type=text]::placeholder{color:var(--text-muted)}
   </div>
   <div class="content">
     <div class="card">
-      <div class="card-title">🗡️ Round Results</div>
-      <div id="round-res"></div>
-    </div>
-    <div class="card">
       <div class="card-title">📊 Standings</div>
-      <div style="overflow-x:auto">
+      <div class="stbl-wrap">
         <table class="stbl" id="standings"></table>
       </div>
-    </div>
-    <div class="card past-rounds-card" id="edit-rounds-card" style="display:none">
-      <div class="card-title">✏️ Fix a Past Round</div>
-      <div class="round-btns" id="edit-round-btns"></div>
     </div>
     <button class="btn btn-primary mt12" onclick="nextRound()" id="btn-next">⛵ Next Round</button>
     <div style="margin-top:10px">
@@ -734,12 +763,12 @@ input[type=text]::placeholder{color:var(--text-muted)}
 // ── Bonus definitions ──────────────────────────────────────
 const BONUSES = [
   {key:'sk',    label:'☠️ Skull King Captured',        pts:50, max:1},
-  {key:'psk',   label:'🏴 Pirate Captured by SK',      pts:30, max:5},
+  {key:'psk',   label:'🏴 Pirate Captured by SK',      pts:30, max:2},
   {key:'msk',   label:'🧜 Mermaid Captures SK',         pts:40, max:2},
   {key:'mp',    label:'🐚 Mermaid by Pirate',          pts:20, max:2},
   {key:'b14',   label:'⚑ Black 14 Flag',               pts:20, max:1},
   {key:'c14',   label:'🏳 Colored 14 Flag (each)',      pts:10, max:3},
-  {key:'r10',   label:'🎲 Rascal Wager +10',            pts:10, max:1},
+  {key:'r10',   label:'🎲 Rascal Wager +10',            pts:10, max:2},
   {key:'r20',   label:'🎲 Rascal Wager +20',            pts:20, max:1},
 ];
 
@@ -767,7 +796,7 @@ function show(id){
   window.scrollTo(0,0);
 }
 
-// ── Toast ──────────────────────────────────────────────────
+// ── Toast ─────────────────────────────────────────────────
 let _tt;
 function toast(msg){
   const el=document.getElementById('toast');
@@ -805,7 +834,7 @@ function renderSavedChips(){
         const arr=getSaved(); arr.splice(i,1); setSaved(arr); renderSavedChips();
         return;
       }
-      if(sPlayers.length>>6){toast('Max 6 players');return;}
+      if(sPlayers.length>=6){toast('Max 6 players');return;}
       if(active.has(name.toLowerCase())){toast(name+' already in lineup');return;}
       sPlayers.push(name);
       renderPlist();
@@ -926,7 +955,7 @@ function _startDrag(idx, touch){
 function _moveDrag(touch){
   if(!_drag.active||!_drag.clone) return;
   const rect=_drag.ghost.getBoundingClientRect();
-  _drag.clone.style.transform=`translate(${rect.left}px,${touch.clientY-rect.height/2}px)`;
+  _drag.clone.style.transform=`translate(${rect.left}px,${touch.clientY-rect.height/2}py)`;
 
   // find drop position
   const rows=[...document.querySelectorAll('#plist .player-row:not(.dragging-ghost)')];
@@ -1255,85 +1284,62 @@ function showBoard(){
   const isLast=G.round>=G.rounds;
   document.getElementById('board-badge').textContent=`After Round ${G.round}`;
   document.getElementById('btn-next').textContent=isLast?'🏆 Final Results':'⛵ Next Round';
-
-  const ri=G.round-1;
-
-  // ── Round results (sorted by round score) ──
-  const resEl=document.getElementById('round-res');
-  resEl.innerHTML='';
-  const sorted=[...G.players].sort((a,b)=>b.scores[ri]-a.scores[ri]);
-  sorted.forEach(p=>{
-    const bid=p.bids[ri], tricks=p.tricks[ri], bonus=p.bonuses[ri], sc=p.scores[ri];
-    const hit=bid===tricks;
-    const tot=total(p);
-    const sign=sc>0?'+':'';
-    const cls=sc>0?'pos-green':sc<0?'pos-red':'pos-muted';
-    const bonNote=bonus>0&&hit?` · +${bonus} bonus`:bonus>0&&!hit?' · bonus lost':'';
-    const d=document.createElement('div');
-    d.className='res-row fadein';
-    d.innerHTML=`
-      <div>
-        <div class="res-name">${p.name}</div>
-        <div class="res-detail">Bid ${bid} · Got ${tricks}<span class="${hit?'badge-hit':'badge-miss'}">${hit?'✓ Hit':'✗ Miss'}</span>${bonNote}</div>
-      </div>
-      <div>
-        <div class="res-sc ${cls}">${sign}${sc}</div>
-        <div class="res-tot">Total: ${tot}</div>
-      </div>
-    `;
-    resEl.appendChild(d);
-  });
-
-  // ── Standings table ──
-  buildStandingsTable('standings',ri+1);
-
-  // ── Past rounds edit buttons ──
-  const eCard=document.getElementById('edit-rounds-card');
-  const eBtns=document.getElementById('edit-round-btns');
-  if(ri>0){
-    eCard.style.display='';
-    eBtns.innerHTML='';
-    for(let r=1;r<=G.round;r++){
-      const btn=document.createElement('button');
-      btn.className='round-btn';
-      btn.textContent=`Round ${r}`;
-      btn.onclick=(r=>()=>openEditRound(r,'s-board'))(r);
-      eBtns.appendChild(btn);
-    }
-  } else {
-    eCard.style.display='none';
-  }
-
+  buildStandingsTable('standings',G.round);
   show('s-board');
 }
 
 function buildStandingsTable(id,numRounds){
   const t=document.getElementById(id);
   const stand=[...G.players].sort((a,b)=>total(b)-total(a));
-  const rndhdr=Array.from({length:numRounds},(_,i)=>`<th>R${i+1}</th>`).join('');
+  const medals=['🥇','🥈','🥉','4.','5.','6.'];
+
+  // Round column headers with pencil edit button
+  const rndhdr=Array.from({length:numRounds},(_,i)=>{
+    const r=i+1;
+    return `<th class="stbl-rnd-hdr">R${r}<button class="stbl-edit-btn" onclick="openEditRound(${r},'s-board')" title="Edit Round ${r}">✏️</button></th>`;
+  }).join('');
+
+  // Player rows with rich round cells
+  const rows=stand.map((p,pos)=>{
+    const cells=Array.from({length:numRounds},(_,i)=>{
+      const ri=i;
+      if(p.scores[ri]===undefined) return `<td class="stbl-cell"></td>`;
+      const sc=p.scores[ri];
+      const bid=p.bids[ri];
+      const tricks=p.tricks[ri];
+      const bonus=p.bonuses[ri]??0;
+      const hit=bid===tricks;
+      // Standard points (score without bonus contribution)
+      const stdSc=calcScore(bid,tricks,0,ri+1,G.mode);
+      const sign=sc>0?'+':'';
+      const cls=sc>0?'pos-green':sc<0?'pos-red':'pos-muted';
+      const hitMark=hit?'<span class="pos-green">✓</span>':'<span class="pos-red">✗</span>';
+      let bonusLine='';
+      if(bonus>0&&hit) bonusLine=`<div class="stbl-cell-bonus earned">+${bonus} bonus</div>`;
+      else if(bonus>0&&!hit) bonusLine=`<div class="stbl-cell-bonus lost">bonus lost</div>`;
+      return `<td class="stbl-cell">
+        <div class="stbl-cell-sc ${cls}">${sign}${sc}</div>
+        <div class="stbl-cell-detail">Bid ${bid} · Got ${tricks} ${hitMark}</div>
+        ${bonusLine}
+      </td>`;
+    }).join('');
+
+    return `<tr>
+      <td class="stbl-pos stbl-s-pos">${pos+1}</td>
+      <td class="stbl-s-name">${medals[pos]||''} ${p.name}</td>
+      ${cells}
+      <td class="stbl-tot stbl-s-tot">${total(p)}</td>
+    </tr>`;
+  }).join('');
+
   t.innerHTML=`
     <thead><tr>
-      <th></th><th style="text-align:left">Player</th>
+      <th class="stbl-s-pos" style="width:28px"></th>
+      <th class="stbl-s-name" style="text-align:left">Player</th>
       ${rndhdr}
-      <th>Total</th>
+      <th class="stbl-s-tot">Total</th>
     </tr></thead>
-    <tbody>
-    ${stand.map((p,pos)=>{
-      const scCells=Array.from({length:numRounds},(_,i)=>{
-        const s=p.scores[i]??0;
-        const sg=s>0?'+':'';
-        const cl=s>0?'pos-green':s<0?'pos-red':'pos-muted';
-        return `<td class="${cl}">${sg}${s}</td>`;
-      }).join('');
-      const medals=['🥇','🥈','🥉','4.','5.','6.'];
-      return `<tr>
-        <td class="stbl-pos">${pos+1}</td>
-        <td>${medals[pos]||''} ${p.name}</td>
-        ${scCells}
-        <td class="stbl-tot">${total(p)}</td>
-      </tr>`;
-    }).join('')}
-    </tbody>
+    <tbody>${rows}</tbody>
   `;
 }
 
@@ -1553,8 +1559,6 @@ function cancelEdit(){
   show(E.from);
 }
 
-// ══════════════════════════════════════════════════════════
-//  NEW GAME CONFIRM
 // ══════════════════════════════════════════════════════════
 function confirmNewGame(){
   // If we're on setup or final, just go directly
