@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="Skull King">
-<title>â ï¸ Skull King Scorer</title>
+<title>☠️ Skull King Scorer</title>
 
 <link rel="manifest" href="./manifest.json">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -39,14 +39,14 @@ body{
   --r:13px;
 }
 
-/* ââ SCREEN MANAGEMENT ââ */
+/* ── SCREEN MANAGEMENT ── */
 .screen{display:none;flex-direction:column;height:100vh;height:100dvh;overflow:hidden}
 .screen.active{display:flex}
 
-/* ââ TYPOGRAPHY ââ */
+/* ── TYPOGRAPHY ── */
 .cinzel{font-family:'Cinzel','Times New Roman',serif}
 
-/* ââ APP HEADER ââ */
+/* ── APP HEADER ── */
 .hdr{
   background:linear-gradient(180deg,#050d1e 0%,#0a1628 100%);
   border-bottom:1.5px solid var(--gold-dim);
@@ -59,7 +59,7 @@ body{
   text-shadow:0 0 22px rgba(240,208,96,0.4);letter-spacing:2px}
 .hdr-sub{font-size:0.82rem;color:var(--text-muted);margin-top:2px}
 
-/* ââ SCROLL CONTENT ââ */
+/* ── SCROLL CONTENT ── */
 .content{
   flex:1;
   min-height:0;
@@ -69,7 +69,7 @@ body{
   overscroll-behavior:contain;
 }
 
-/* ââ CARDS ââ */
+/* ── CARDS ── */
 .card{
   background:var(--navy-card);
   border:1px solid var(--border);
@@ -82,7 +82,7 @@ body{
   letter-spacing:1px;margin-bottom:12px;text-transform:uppercase;
 }
 
-/* ââ BUTTONS ââ */
+/* ── BUTTONS ── */
 button{touch-action:manipulation;font-family:inherit;cursor:pointer}
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:7px;
@@ -110,7 +110,7 @@ button{touch-action:manipulation;font-family:inherit;cursor:pointer}
   border:1px solid rgba(192,57,43,0.4);
 }
 
-/* ââ SEGMENT CONTROL ââ */
+/* ── SEGMENT CONTROL ── */
 .seg{
   display:flex;background:rgba(0,0,0,0.32);
   border-radius:10px;padding:3px;gap:3px;
@@ -126,7 +126,7 @@ button{touch-action:manipulation;font-family:inherit;cursor:pointer}
   color:#0a1628;font-weight:700;
 }
 
-/* ââ STEPPER ââ */
+/* ── STEPPER ── */
 .stepper{
   display:flex;align-items:center;
   background:rgba(0,0,0,0.3);border:1px solid var(--border);
@@ -145,7 +145,7 @@ button{touch-action:manipulation;font-family:inherit;cursor:pointer}
   color:var(--text);user-select:none;
 }
 
-/* ââ INPUTS ââ */
+/* ── INPUTS ── */
 .lbl{display:block;font-size:0.8rem;color:var(--text-muted);
   margin-bottom:6px;font-family:'Cinzel',serif;letter-spacing:0.4px}
 input[type=text]{
@@ -158,7 +158,7 @@ input[type=text]{
 input[type=text]:focus{border-color:var(--gold)}
 input[type=text]::placeholder{color:var(--text-muted)}
 
-/* ââ SETUP SCREEN ââ */
+/* ── SETUP SCREEN ── */
 .logo{text-align:center;padding:28px 0 22px}
 .logo .skull{font-size:3.5rem;display:inline-block}
 .logo h1{font-family:'Cinzel',serif;font-size:2rem;color:var(--gold-bright);
@@ -176,7 +176,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
 }
 .add-remove-row{display:flex;gap:10px;justify-content:center;margin-top:10px}
 
-/* ââ SAVED PLAYERS CHIPS ââ */
+/* ── SAVED PLAYERS CHIPS ── */
 .saved-chips-wrap{margin-bottom:14px}
 .saved-chips-lbl{font-size:0.72rem;color:var(--gold);letter-spacing:1px;
   text-transform:uppercase;margin-bottom:8px;font-family:'Cinzel',serif}
@@ -200,7 +200,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
 .chip-del:hover{color:var(--danger);background:rgba(192,57,43,0.18)}
 .no-saved-hint{font-size:0.8rem;color:var(--text-muted);font-style:italic}
 
-/* ââ DRAG HANDLE ââ */
+/* ── DRAG HANDLE ── */
 .drag-handle{
   width:28px;height:44px;display:flex;align-items:center;justify-content:center;
   flex-shrink:0;color:var(--text-muted);font-size:1.1rem;
@@ -229,7 +229,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
   margin:0 8px;transition:opacity 0.1s;
 }
 
-/* ââ BID SCREEN ââ */
+/* ── BID SCREEN ── */
 .bid-intro{text-align:center;padding:4px 0 14px}
 .bid-cards-lbl{font-family:'Cinzel',serif;font-size:0.95rem;color:var(--gold)}
 .bid-card{
@@ -240,7 +240,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
 .bid-card-icon{font-size:1.3rem;flex-shrink:0}
 .bid-card-name{
   font-family:'Cinzel',serif;font-size:1rem;color:var(--text);
-  flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowraw;
 }
 .bid-mini-stepper{
   display:flex;align-items:center;
@@ -260,7 +260,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
   color:var(--text);user-select:none;
 }
 
-/* ââ SCORE SCREEN ââ */
+/* ── SCORE SCREEN ── */
 .ptabs{
   display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;
   margin-bottom:14px;scrollbar-width:none;
@@ -297,7 +297,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
 .preview-val{font-family:'Cinzel',serif;font-size:1.45rem;font-weight:700}
 .preview-note{font-size:0.78rem;color:var(--text-muted);margin-top:3px}
 
-/* ââ BONUS GRID ââ */
+/* ── BONUS GRID ── */
 .bonus-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
 .bonus-item{
   background:rgba(0,0,0,0.22);border:1px solid var(--border);
@@ -319,7 +319,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
   color:var(--text);min-width:22px;text-align:center;
 }
 
-/* ââ SCOREBOARD ââ */
+/* ── SCOREBOARD ── */
 .res-row{
   display:flex;justify-content:space-between;align-items:center;
   padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.05);
@@ -341,7 +341,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
 .pos-red{color:var(--danger)}
 .pos-muted{color:var(--text-muted)}
 
-/* ââ STANDINGS TABLE ââ */
+/* ── STANDINGS TABLE ── */
 .stbl{width:100%;border-collapse:collapse;font-size:0.9rem}
 .stbl th{
   font-family:'Cinzel',serif;font-size:0.7rem;color:var(--gold);
@@ -355,7 +355,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
 .stbl-tot{font-family:'Cinzel',serif;font-weight:700;color:var(--gold-bright);font-size:0.95rem}
 .stbl-pos{font-size:0.78rem;color:var(--text-muted);font-family:'Cinzel',serif}
 
-/* ââ FINAL SCREEN ââ */
+/* ── FINAL SCREEN ── */
 .winner-box{
   text-align:center;padding:28px 18px;
   background:linear-gradient(135deg,rgba(201,162,39,0.1),rgba(201,162,39,0.04));
@@ -373,7 +373,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
 }
 .w-score{font-size:1rem;color:var(--text-muted);margin-top:5px}
 
-/* ââ MISC UTILS ââ */
+/* ── MISC UTILS ── */
 .divider{height:1px;background:var(--border);margin:14px 0}
 .pill{
   display:inline-block;background:var(--gold-dim2);border:1px solid var(--gold-dim);
@@ -384,13 +384,13 @@ input[type=text]::placeholder{color:var(--text-muted)}
 .mt16{margin-top:16px}.mt20{margin-top:20px}.mb12{margin-bottom:12px}
 .tc{text-align:center}.safe{height:28px}
 
-/* ââ ANIMATIONS ââ */
+/* ── ANIMATIONS ── */
 @keyframes sway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
 .sway{animation:sway 3s ease-in-out infinite;display:inline-block}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .fadein{animation:fadeUp 0.3s ease forwards}
 
-/* ââ TOAST ââ */
+/* ── TOAST ── */
 .toast{
   position:fixed;bottom:76px;left:50%;
   transform:translateX(-50%) translateY(90px);
@@ -401,7 +401,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
 }
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 
-/* ââ SCORE ROWS (all-players view) ââ */
+/* ── SCORE ROW (all-players view) ── */
 .sc-row{
   background:var(--navy-card);border:1px solid var(--border);
   border-radius:var(--r);padding:13px 14px;margin-bottom:10px;
@@ -450,7 +450,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
   flex-shrink:0;min-width:48px;text-align:right;
 }
 
-/* ââ BONUS BOTTOM SHEET ââ */
+/* ── BONUS BOTTOM SHEET ── */
 .bonus-sheet{
   position:fixed;inset:0;z-index:300;
   background:rgba(0,0,0,0.65);
@@ -459,7 +459,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
   transition:opacity 0.22s;
   -webkit-tap-highlight-color:transparent;
 }
-.bonus-sheet.open{opacity:1;pointer-events:all}
+.bonus-sheet.open{mopacity:1;pointer-events:all}
 .bonus-sheet-panel{
   background:#0e1e38;
   border-radius:20px 20px 0 0;
@@ -482,7 +482,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
 }
 .sheet-note{font-size:0.8rem;color:var(--text-muted);text-align:center;margin-bottom:14px}
 
-/* ââ EDIT SCREEN ââ */
+/* ── EDIT SCREEN ── */
 .edit-banner{
   background:rgba(201,162,39,0.1);border:1px solid var(--gold-dim);
   border-radius:10px;padding:11px 14px;margin-bottom:14px;
@@ -503,7 +503,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
 }
 .round-btn:active{background:var(--gold-dim);border-color:var(--gold);color:var(--gold-bright)}
 
-/* ââ CONFIRM DIALOG ââ */
+/* ── CONFIRM DIALOG ── */
 .overlay{
   display:none;position:fixed;inset:0;
   background:rgba(0,0,0,0.7);z-index:500;
@@ -523,19 +523,19 @@ input[type=text]::placeholder{color:var(--text-muted)}
 </head>
 <body>
 
-<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- ═══════════════════════════════════════════════════════ -->
 <!--  SCREEN: SETUP                                         -->
-<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- ════════════════════════════════════════════════════════ -->
 <div id="s-setup" class="screen active">
   <div class="content">
     <div class="logo">
-      <div class="skull sway">â ï¸</div>
+      <div class="skull sway">☠️</div>
       <h1>SKULL KING</h1>
       <div class="sub">Score Keeper</div>
     </div>
 
     <div class="card">
-      <div class="card-title">âï¸ Scoring Mode</div>
+      <div class="card-title">⚔️ Scoring Mode</div>
       <div class="seg" id="mode-seg">
         <button class="seg-btn on" onclick="selMode('classic')">Classic</button>
         <button class="seg-btn" onclick="selMode('rascal')">Rascal</button>
@@ -544,19 +544,19 @@ input[type=text]::placeholder{color:var(--text-muted)}
     </div>
 
     <div class="card">
-      <div class="card-title">ð Number of Rounds</div>
+      <div class="card-title">🌊 Number of Rounds</div>
       <div class="stepper">
-        <button class="step-btn" onclick="chRounds(-1)">â</button>
+        <button class="step-btn" onclick="chRounds(-1)">−</button>
         <div class="step-val" id="rnds-val">10</div>
         <button class="step-btn" onclick="chRounds(1)">+</button>
       </div>
-      <div class="mt8 tc" style="font-size:0.82rem;color:var(--text-muted)">1 â 10 rounds Â· standard game is 10</div>
+      <div class="mt8 tc" style="font-size:0.82rem;color:var(--text-muted)">1 – 10 rounds · standard game is 10</div>
     </div>
 
     <div class="card">
-      <div class="card-title">ð´ââ ï¸ Players <span style="color:var(--text-muted);font-size:0.8rem;font-family:inherit;font-weight:400;letter-spacing:0">(2 â 6)</span></div>
+      <div class="card-title">🏴‍☠️ Players <span style="color:var(--text-muted);font-size:0.8rem;font-family:inherit;font-weight:400;letter-spacing:0">(2 – 6)</span></div>
       <div class="saved-chips-wrap">
-        <div class="saved-chips-lbl">Saved Players <span>â tap to add</span></div>
+        <div class="saved-chips-lbl">Saved Players <span>— tap to add</span></div>
         <div class="chips-row" id="saved-chips"></div>
       </div>
       <div id="plist"></div>
@@ -565,14 +565,14 @@ input[type=text]::placeholder{color:var(--text-muted)}
       </div>
     </div>
 
-    <button class="btn btn-primary mt16" onclick="startGame()">â Set Sail!</button>
+    <button class="btn btn-primary mt16" onclick="startGame()">⚓ Set Sail!</button>
     <div class="safe"></div>
   </div>
 </div>
 
-<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- ════════════════════════════════════════════════════════ -->
 <!--  SCREEN: BID                                           -->
-<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- ════════════════════════════════════════════════════════ -->
 <div id="s-bid" class="screen">
   <div class="hdr">
     <h1>SKULL KING</h1>
@@ -587,30 +587,30 @@ input[type=text]::placeholder{color:var(--text-muted)}
       <div style="font-size:0.82rem;color:var(--text-muted);margin-top:5px">Everyone sets their bid, then tap Start Scoring</div>
     </div>
     <div id="bid-player-cards"></div>
-    <button class="btn btn-primary mt8" onclick="submitBids()">ð Start Scoring</button>
+    <button class="btn btn-primary mt8" onclick="submitBids()">🃏 Start Scoring</button>
     <div class="safe"></div>
   </div>
 </div>
 
-<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- ════════════════════════════════════════════════════════ -->
 <!--  SCREEN: SCORE ENTRY                                   -->
-<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- ════════════════════════════════════════════════════════ -->
 <div id="s-score" class="screen">
   <div class="hdr">
     <h1>SKULL KING</h1>
-    <div class="hdr-sub" id="sc-badge">Round 1 â Enter Scores</div>
+    <div class="hdr-sub" id="sc-badge">Round 1 — Enter Scores</div>
   </div>
   <div class="content">
     <div class="mb12"><span class="pill" id="sc-pill">ROUND 1</span></div>
     <div id="sc-panels"></div>
-    <button class="btn btn-primary mt12" onclick="calcScores()">â Calculate Scores</button>
+    <button class="btn btn-primary mt12" onclick="calcScores()">⚓ Calculate Scores</button>
     <div class="safe"></div>
   </div>
 </div>
 
-<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- ════════════════════════════════════════════════════════ -->
 <!--  SCREEN: ROUND SCOREBOARD                              -->
-<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- ════════════════════════════════════════════════════════ -->
 <div id="s-board" class="screen">
   <div class="hdr">
     <h1>SKULL KING</h1>
@@ -618,30 +618,30 @@ input[type=text]::placeholder{color:var(--text-muted)}
   </div>
   <div class="content">
     <div class="card">
-      <div class="card-title">ð¡ï¸ Round Results</div>
+      <div class="card-title">🗡️ Round Results</div>
       <div id="round-res"></div>
     </div>
     <div class="card">
-      <div class="card-title">ð Standings</div>
+      <div class="card-title">📊 Standings</div>
       <div style="overflow-x:auto">
         <table class="stbl" id="standings"></table>
       </div>
     </div>
     <div class="card past-rounds-card" id="edit-rounds-card" style="display:none">
-      <div class="card-title">âï¸ Fix a Past Round</div>
+      <div class="card-title">✏️ Fix a Past Round</div>
       <div class="round-btns" id="edit-round-btns"></div>
     </div>
-    <button class="btn btn-primary mt12" onclick="nextRound()" id="btn-next">âµ Next Round</button>
+    <button class="btn btn-primary mt12" onclick="nextRound()" id="btn-next">⛵ Next Round</button>
     <div style="margin-top:10px">
-      <button class="btn btn-ghost" style="width:100%;font-size:0.82rem" onclick="confirmNewGame()">â© New Game</button>
+      <button class="btn btn-ghost" style="width:100%;font-size:0.82rem" onclick="confirmNewGame()">↩ New Game</button>
     </div>
     <div class="safe"></div>
   </div>
 </div>
 
-<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- ════════════════════════════════════════════════════════ -->
 <!--  SCREEN: FINAL                                         -->
-<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- ════════════════════════════════════════════════════════ -->
 <div id="s-final" class="screen">
   <div class="hdr">
     <h1>SKULL KING</h1>
@@ -649,31 +649,31 @@ input[type=text]::placeholder{color:var(--text-muted)}
   </div>
   <div class="content">
     <div class="winner-box fadein">
-      <div class="w-crown sway">ð</div>
+      <div class="w-crown sway">👑</div>
       <div class="w-label">SKULL KING</div>
-      <div class="w-name" id="w-name">â</div>
+      <div class="w-name" id="w-name">—</div>
       <div class="w-score" id="w-score">with 0 points</div>
     </div>
     <div class="card">
-      <div class="card-title">ð Final Standings</div>
+      <div class="card-title">📊 Final Standings</div>
       <table class="stbl" id="final-stbl"></table>
     </div>
     <div class="card">
-      <div class="card-title">ð Round History</div>
+      <div class="card-title">📈 Round History</div>
       <div id="final-hist" style="overflow-x:auto"></div>
     </div>
     <div class="card past-rounds-card">
-      <div class="card-title">âï¸ Fix a Past Round</div>
+      <div class="card-title">✏️ Fix a Past Round</div>
       <div class="round-btns" id="edit-round-btns-final"></div>
     </div>
-    <button class="btn btn-primary mt8" onclick="confirmNewGame()">ð New Game</button>
+    <button class="btn btn-primary mt8" onclick="confirmNewGame()">🔄 New Game</button>
     <div class="safe"></div>
   </div>
 </div>
 
-<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- ════════════════════════════════════════════════════════ -->
 <!--  SCREEN: EDIT PAST ROUND                               -->
-<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- ════════════════════════════════════════════════════════ -->
 <div id="s-edit" class="screen">
   <div class="hdr">
     <h1>SKULL KING</h1>
@@ -681,7 +681,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
   </div>
   <div class="content">
     <div class="edit-banner">
-      <div class="edit-banner-icon">âï¸</div>
+      <div class="edit-banner-icon">✏️</div>
       <div class="edit-banner-text">
         <b id="edit-title">Editing Round 1</b><br>
         <small id="edit-cards-note">1 card was dealt this round</small>
@@ -689,13 +689,13 @@ input[type=text]::placeholder{color:var(--text-muted)}
     </div>
     <div class="ptabs" id="edit-ptabs"></div>
     <div id="edit-panels"></div>
-    <button class="btn btn-primary mt12" onclick="saveEditRound()">â Save Changes</button>
-    <button class="btn btn-ghost mt8" style="width:100%" onclick="cancelEdit()">â Cancel</button>
+    <button class="btn btn-primary mt12" onclick="saveEditRound()">✅ Save Changes</button>
+    <button class="btn btn-ghost mt8" style="width:100%" onclick="cancelEdit()">✗ Cancel</button>
     <div class="safe"></div>
   </div>
 </div>
 
-<!-- ââ BONUS BOTTOM SHEET ââ -->
+<!-- ── BONUS BOTTOM SHEET ── -->
 <div class="bonus-sheet" id="bonus-sheet" onclick="handleSheetBgClick(event)">
   <div class="bonus-sheet-panel">
     <div class="sheet-handle"></div>
@@ -704,17 +704,17 @@ input[type=text]::placeholder{color:var(--text-muted)}
     <div class="bonus-grid" id="bonus-sheet-grid"></div>
     <div class="preview-box" style="margin-top:14px">
       <div class="preview-lbl">Score Preview</div>
-      <div class="preview-val" id="sheet-preview-val">â</div>
+      <div class="preview-val" id="sheet-preview-val">—</div>
       <div class="preview-note" id="sheet-preview-note"></div>
     </div>
-    <button class="btn btn-primary" style="margin-top:14px" onclick="closeBonusSheet()">â Done</button>
+    <button class="btn btn-primary" style="margin-top:14px" onclick="closeBonusSheet()">✓ Done</button>
   </div>
 </div>
 
-<!-- ââ CONFIRM DIALOG ââ -->
+<!-- ── CONFIRM DIALOG ── -->
 <div class="overlay" id="confirm-overlay">
   <div class="dialog">
-    <h3>â New Game?</h3>
+    <h3>⚓ New Game?</h3>
     <p>This will end the current game. All scores will be lost.</p>
     <div class="dialog-btns">
       <button class="btn btn-ghost" onclick="closeConfirm()">Cancel</button>
@@ -723,34 +723,34 @@ input[type=text]::placeholder{color:var(--text-muted)}
   </div>
 </div>
 
-<!-- ââ TOAST ââ -->
+<!-- ── TOAST ── -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-// â  SKULL KING SCORER â v1.0                               â
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ╔═════════════════════════════════════════════════════════╗
+// ║  SKULL KING SCORER — v1.0                               ║
+// ╚═════════════════════════════════════════════════════════╝
 
-// ââ Bonus definitions ââââââââââââââââââââââââââââââââââââââ
+// ── Bonus definitions ──────────────────────────────────────
 const BONUSES = [
-  {key:'sk',    label:'â ï¸ Skull King Captured',        pts:50, max:1},
-  {key:'psk',   label:'ð´ Pirate Captured by SK',      pts:30, max:5},
-  {key:'msk',   label:'ð§ Mermaid Captures SK',         pts:40, max:2},
-  {key:'mp',    label:'ð Mermaid by Pirate',          pts:20, max:2},
-  {key:'b14',   label:'â Black 14 Flag',               pts:20, max:1},
-  {key:'c14',   label:'ð³ Colored 14 Flag (each)',      pts:10, max:3},
-  {key:'r10',   label:'ð² Rascal Wager +10',            pts:10, max:1},
-  {key:'r20',   label:'ð² Rascal Wager +20',            pts:20, max:1},
+  {key:'sk',    label:'☠️ Skull King Captured',        pts:50, max:1},
+  {key:'psk',   label:'🏴 Pirate Captured by SK',      pts:30, max:5},
+  {key:'msk',   label:'🧜 Mermaid Captures SK',         pts:40, max:2},
+  {key:'mp',    label:'🐚 Mermaid by Pirate',          pts:20, max:2},
+  {key:'b14',   label:'⚑ Black 14 Flag',               pts:20, max:1},
+  {key:'c14',   label:'🏳 Colored 14 Flag (each)',      pts:10, max:3},
+  {key:'r10',   label:'🎲 Rascal Wager +10',            pts:10, max:1},
+  {key:'r20',   label:'🎲 Rascal Wager +20',            pts:20, max:1},
 ];
 
-const ICONS = ['ð¦','â','ð¡ï¸','ð´ââ ï¸','ð','ð'];
+const ICONS = ['🦜','⚓','🗡️','🏴‍☠️','💀','🐚'];
 
 const MODE_DESCS = {
-  classic:'Classic: Hit exact bid â 20pts Ã tricks bid. Miss â â10pts Ã tricks off. Zero bid: Â±10pts Ã round. Bonus points only count on a hit.',
-  rascal: 'Rascal: Hit exact bid â 10pts Ã round. Off by 1 â half points. Off by 2+ â 0pts. Zero bid: Â±10pts Ã round. Bonus points only count on exact hit.',
+  classic:'Classic: Hit exact bid → 20pts × tricks bid. Miss → −10pts × tricks off. Zero bid: ±10pts × round. Bonus points only count on a hit.',
+  rascal: 'Rascal: Hit exact bid → 10pts × round. Off by 1 → half points. Off by 2+ → 0pts. Zero bid: ±10pts × round. Bonus points only count on exact hit.',
 };
 
-// ââ Game state âââââââââââââââââââââââââââââââââââââââââââââ
+// ── Game state ─────────────────────────────────────────────
 const G = {
   mode:'classic', rounds:10,
   players:[],   // {name, scores[], bids[], tricks[], bonuses[]}
@@ -760,14 +760,14 @@ const G = {
   scTab:0,
 };
 
-// ââ Screen helper ââââââââââââââââââââââââââââââââââââââââââ
+// ── Screen helper ──────────────────────────────────────────
 function show(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   window.scrollTo(0,0);
 }
 
-// ââ Toast ââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ── Toast ──────────────────────────────────────────────────
 let _tt;
 function toast(msg){
   const el=document.getElementById('toast');
@@ -775,9 +775,9 @@ function toast(msg){
   clearTimeout(_tt); _tt=setTimeout(()=>el.classList.remove('show'),2600);
 }
 
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ══════════════════════════════════════════════════════════
 //  SAVED PLAYERS (localStorage)
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ══════════════════════════════════════════════════════════
 function getSaved(){
   try{return JSON.parse(localStorage.getItem('skullKingSaved')||'[]');}catch{return [];}
 }
@@ -798,14 +798,14 @@ function renderSavedChips(){
     const btn=document.createElement('button');
     const isUsed=active.has(name.toLowerCase());
     btn.className='saved-chip'+(isUsed?' used':'');
-    btn.innerHTML=name+' <span class="chip-del" title="Remove">Ã</span>';
+    btn.innerHTML=name+' <span class="chip-del" title="Remove">×</span>';
     btn.addEventListener('click',(e)=>{
       if(e.target.classList.contains('chip-del')){
         e.stopPropagation();
         const arr=getSaved(); arr.splice(i,1); setSaved(arr); renderSavedChips();
         return;
       }
-      if(sPlayers.length>=6){toast('Max 6 players');return;}
+      if(sPlayers.length>>6){toast('Max 6 players');return;}
       if(active.has(name.toLowerCase())){toast(name+' already in lineup');return;}
       sPlayers.push(name);
       renderPlist();
@@ -827,9 +827,9 @@ function saveCurrentNames(){
   setSaved(saved);
 }
 
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ══════════════════════════════════════════════════════════
 //  SETUP
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ══════════════════════════════════════════════════════════
 let sPlayers=[];
 
 function initSetup(){
@@ -864,7 +864,7 @@ function renderPlist(){
   document.getElementById('btn-add').disabled=sPlayers.length>=6;
 }
 
-// ââ DRAG TO REORDER ââââââââââââââââââââââââââââââââââââââââââ
+// ── DRAG TO REORDER ──────────────────────────────────────────
 let _drag={active:false,srcIdx:-1,clone:null,ghost:null,indicator:null};
 
 function initDragHandle(handle, idx){
@@ -1021,9 +1021,9 @@ function startGame(){
   startRound();
 }
 
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ══════════════════════════════════════════════════════════
 //  ROUND FLOW
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ══════════════════════════════════════════════════════════
 function startRound(){
   const n=G.players.length;
   G.tempBids=new Array(n).fill(0);
@@ -1032,9 +1032,9 @@ function startRound(){
   showBidScreen();
 }
 
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ══════════════════════════════════════════════════════════
 //  BID SCREEN
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ══════════════════════════════════════════════════════════
 function showBidScreen(){
   document.getElementById('bid-badge').textContent=`Round ${G.round} of ${G.rounds}`;
   document.getElementById('bid-pill').textContent=`ROUND ${G.round}`;
@@ -1053,7 +1053,7 @@ function renderBidCards(){
       <span class="bid-card-icon">${ICONS[i]}</span>
       <span class="bid-card-name">${p.name}</span>
       <div class="bid-mini-stepper">
-        <button class="bid-mini-btn" onclick="chBid(${i},-1)">â</button>
+        <button class="bid-mini-btn" onclick="chBid(${i},-1)">−</button>
         <div class="bid-mini-val" id="bv-${i}">${G.tempBids[i]}</div>
         <button class="bid-mini-btn" onclick="chBid(${i},1)">+</button>
       </div>
@@ -1072,11 +1072,11 @@ function submitBids(){
   showScoreScreen();
 }
 
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-//  SCORE ENTRY SCREEN â all players at once
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ══════════════════════════════════════════════════════════
+//  SCORE ENTRY SCREEN — all players at once
+// ══════════════════════════════════════════════════════════
 function showScoreScreen(){
-  document.getElementById('sc-badge').textContent=`Round ${G.round} â Enter Scores`;
+  document.getElementById('sc-badge').textContent=`Round ${G.round} — Enter Scores`;
   document.getElementById('sc-pill').textContent=`ROUND ${G.round}`;
   renderAllScoreRows();
   show('s-score');
@@ -1096,14 +1096,14 @@ function renderAllScoreRows(){
       </div>
       <div class="sc-row-bottom">
         <div class="sc-mini-stepper">
-          <button class="sc-mini-btn" onclick="chTricks(${i},-1)">â</button>
+          <button class="sc-mini-btn" onclick="chTricks(${i},-1)">−</button>
           <div class="sc-mini-val" id="tv-${i}">${G.tempTricks[i]}</div>
           <button class="sc-mini-btn" onclick="chTricks(${i},1)">+</button>
         </div>
         <button class="sc-bonus-btn" id="bbonus-${i}" onclick="openBonusSheet(${i})">
-          ð <span id="bbonus-lbl-${i}">Bonuses</span>
+          💎 <span id="bbonus-lbl-${i}">Bonuses</span>
         </button>
-        <div class="sc-preview pos-muted" id="pv-${i}">â</div>
+        <div class="sc-preview pos-muted" id="pv-${i}">—</div>
       </div>
     `;
     el.appendChild(div);
@@ -1111,7 +1111,7 @@ function renderAllScoreRows(){
   });
 }
 
-// ââ Bonus bottom sheet âââââââââââââââââââââââââââââââââââââ
+// ── Bonus bottom sheet ─────────────────────────────────────
 let _bsIdx=-1;
 
 function openBonusSheet(idx){
@@ -1119,13 +1119,13 @@ function openBonusSheet(idx){
   const p=G.players[idx];
   document.getElementById('bonus-sheet-title').textContent=`${ICONS[idx]} ${p.name}`;
   document.getElementById('bonus-sheet-note').textContent=
-    `Round ${G.round} Â· Bid: ${G.tempBids[idx]} Â· Bonuses only count on an exact bid`;
+    `Round ${G.round} · Bid: ${G.tempBids[idx]} · Bonuses only count on an exact bid`;
   document.getElementById('bonus-sheet-grid').innerHTML=BONUSES.map(b=>`
     <div class="bonus-item">
       <div class="bonus-lbl">${b.label}</div>
       <div class="bonus-pts">+${b.pts}${b.max>1?' ea':''}</div>
       <div class="bonus-row">
-        <button class="bbonus-btn" onclick="chBonus(${idx},'${b.key}',-1,${b.max})">â</button>
+        <button class="bbonus-btn" onclick="chBonus(${idx},'${b.key}',-1,${b.max})">−</button>
         <div class="bbonus-cnt" id="bc-${idx}-${b.key}">${G.tempBonuses[idx][b.key]}</div>
         <button class="bbonus-btn" onclick="chBonus(${idx},'${b.key}',1,${b.max})">+</button>
       </div>
@@ -1157,7 +1157,7 @@ function updateSheetPreview(idx){
   }
   if(pn){
     if(bonus>0&&hit) pn.textContent=`Includes +${bonus} bonus`;
-    else if(bonus>0&&!hit) pn.textContent='â ï¸ Bonus lost â bid missed';
+    else if(bonus>0&&!hit) pn.textContent='⚠️ Bonus lost — bid missed';
     else pn.textContent='';
   }
 }
@@ -1182,7 +1182,7 @@ function totalBonus(idx){
   return BONUSES.reduce((s,b)=>s+b.pts*G.tempBonuses[idx][b.key],0);
 }
 
-// ââ Core scoring formula âââââââââââââââââââââââââââââââââââ
+// ── Core scoring formula ───────────────────────────────────
 function calcScore(bid,tricks,bonus,round,mode){
   const hit=bid===tricks;
   if(mode==='classic'){
@@ -1217,7 +1217,7 @@ function updatePreview(idx){
   const pn=document.getElementById(`pn-${idx}`);
   if(pn){
     if(bonus>0&&hit) pn.textContent=`Includes +${bonus} bonus`;
-    else if(bonus>0&&!hit) pn.textContent='â ï¸ Bonus lost â bid missed';
+    else if(bonus>0&&!hit) pn.textContent='⚠️ Bonus lost — bid missed';
     else pn.textContent='';
   }
   // update the bonus button label in the score row
@@ -1227,9 +1227,9 @@ function updatePreview(idx){
   if(bBtn) bBtn.classList.toggle('has-bonus',bonus>0);
 }
 
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ══════════════════════════════════════════════════════════
 //  CALCULATE & SAVE SCORES
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ══════════════════════════════════════════════════════════
 function calcScores(){
   G.players.forEach((p,idx)=>{
     const bid=G.tempBids[idx];
@@ -1248,17 +1248,17 @@ function calcScores(){
 
 function total(p){return p.scores.reduce((a,b)=>a+b,0)}
 
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ══════════════════════════════════════════════════════════
 //  ROUND SCOREBOARD
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ══════════════════════════════════════════════════════════
 function showBoard(){
   const isLast=G.round>=G.rounds;
   document.getElementById('board-badge').textContent=`After Round ${G.round}`;
-  document.getElementById('btn-next').textContent=isLast?'ð Final Results':'âµ Next Round';
+  document.getElementById('btn-next').textContent=isLast?'🏆 Final Results':'⛵ Next Round';
 
   const ri=G.round-1;
 
-  // ââ Round results (sorted by round score) ââ
+  // ── Round results (sorted by round score) ──
   const resEl=document.getElementById('round-res');
   resEl.innerHTML='';
   const sorted=[...G.players].sort((a,b)=>b.scores[ri]-a.scores[ri]);
@@ -1268,13 +1268,13 @@ function showBoard(){
     const tot=total(p);
     const sign=sc>0?'+':'';
     const cls=sc>0?'pos-green':sc<0?'pos-red':'pos-muted';
-    const bonNote=bonus>0&&hit?` Â· +${bonus} bonus`:bonus>0&&!hit?' Â· bonus lost':'';
+    const bonNote=bonus>0&&hit?` · +${bonus} bonus`:bonus>0&&!hit?' · bonus lost':'';
     const d=document.createElement('div');
     d.className='res-row fadein';
     d.innerHTML=`
       <div>
         <div class="res-name">${p.name}</div>
-        <div class="res-detail">Bid ${bid} Â· Got ${tricks}<span class="${hit?'badge-hit':'badge-miss'}">${hit?'â Hit':'â Miss'}</span>${bonNote}</div>
+        <div class="res-detail">Bid ${bid} · Got ${tricks}<span class="${hit?'badge-hit':'badge-miss'}">${hit?'✓ Hit':'✗ Miss'}</span>${bonNote}</div>
       </div>
       <div>
         <div class="res-sc ${cls}">${sign}${sc}</div>
@@ -1284,10 +1284,10 @@ function showBoard(){
     resEl.appendChild(d);
   });
 
-  // ââ Standings table ââ
+  // ── Standings table ──
   buildStandingsTable('standings',ri+1);
 
-  // ââ Past rounds edit buttons ââ
+  // ── Past rounds edit buttons ──
   const eCard=document.getElementById('edit-rounds-card');
   const eBtns=document.getElementById('edit-round-btns');
   if(ri>0){
@@ -1325,7 +1325,7 @@ function buildStandingsTable(id,numRounds){
         const cl=s>0?'pos-green':s<0?'pos-red':'pos-muted';
         return `<td class="${cl}">${sg}${s}</td>`;
       }).join('');
-      const medals=['ð¥','ð¥','ð¥','4.','5.','6.'];
+      const medals=['🥇','🥈','🥉','4.','5.','6.'];
       return `<tr>
         <td class="stbl-pos">${pos+1}</td>
         <td>${medals[pos]||''} ${p.name}</td>
@@ -1343,9 +1343,9 @@ function nextRound(){
   startRound();
 }
 
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ══════════════════════════════════════════════════════════
 //  FINAL SCREEN
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ══════════════════════════════════════════════════════════
 function showFinal(){
   const stand=[...G.players].sort((a,b)=>total(b)-total(a));
   const winner=stand[0];
@@ -1357,7 +1357,7 @@ function showFinal(){
   ft.innerHTML=`
     <thead><tr><th></th><th style="text-align:left">Player</th><th>Score</th></tr></thead>
     <tbody>${stand.map((p,i)=>{
-      const medals=['ð¥','ð¥','ð¥','4ï¸â£','5ï¸â£','6ï¸â£'];
+      const medals=['🥇','🥈','🥉','4️⃣','5️⃣','6️⃣'];
       return `<tr>
         <td class="stbl-pos">${i+1}</td>
         <td>${medals[i]||''} ${p.name}</td>
@@ -1390,13 +1390,13 @@ function showFinal(){
     <table class="stbl">
       <thead><tr>
         <th style="text-align:left">Rnd</th>
-        ${G.players.map(p=>`<th>${p.name.length>6?p.name.slice(0,5)+'â¦':p.name}</th>`).join('')}
+        ${G.players.map(p=>`<th>${p.name.length>6?p.name.slice(0,5)+'…':p.name}</th>`).join('')}
       </tr></thead>
       <tbody>${rows}</tbody>
     </table>
   `;
 
-  // ââ Past rounds edit buttons (final screen) ââ
+  // ── Past rounds edit buttons (final screen) ──
   const eBtnsF=document.getElementById('edit-round-btns-final');
   if(eBtnsF){
     eBtnsF.innerHTML='';
@@ -1412,9 +1412,9 @@ function showFinal(){
   show('s-final');
 }
 
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ══════════════════════════════════════════════════════════
 //  EDIT PAST ROUND
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ══════════════════════════════════════════════════════════
 const E={ri:0,bids:[],tricks:[],bonuses:[],tab:0,from:'s-board'};
 
 function openEditRound(r,from){
@@ -1457,7 +1457,7 @@ function renderEditPanel(idx){
       <div class="bonus-lbl">${b.label}</div>
       <div class="bonus-pts">+${b.pts}${b.max>1?' ea':''}</div>
       <div class="bonus-row">
-        <button class="bbonus-btn" onclick="chEB(${idx},'${b.key}',-1,${b.max})">â</button>
+        <button class="bbonus-btn" onclick="chEB(${idx},'${b.key}',-1,${b.max})">−</button>
         <div class="bbonus-cnt" id="eb-${idx}-${b.key}">${E.bonuses[idx][b.key]}</div>
         <button class="bbonus-btn" onclick="chEB(${idx},'${b.key}',1,${b.max})">+</button>
       </div>
@@ -1469,15 +1469,15 @@ function renderEditPanel(idx){
         <div class="psc-name">${ICONS[idx]} ${p.name}</div>
         <div style="font-size:0.8rem;color:var(--text-muted)">Round ${rn}</div>
       </div>
-      <div class="sec-lbl">Bid (0 â ${rn})</div>
+      <div class="sec-lbl">Bid (0 – ${rn})</div>
       <div class="stepper" style="margin-bottom:16px">
-        <button class="step-btn" onclick="chEBid(${idx},-1)">â</button>
+        <button class="step-btn" onclick="chEBid(${idx},-1)">−</button>
         <div class="step-val" id="eb-bid-${idx}">${E.bids[idx]}</div>
         <button class="step-btn" onclick="chEBid(${idx},1)">+</button>
       </div>
-      <div class="sec-lbl">Tricks Won (0 â ${rn})</div>
+      <div class="sec-lbl">Tricks Won (0 – ${rn})</div>
       <div class="stepper" style="margin-bottom:16px">
-        <button class="step-btn" onclick="chET(${idx},-1)">â</button>
+        <button class="step-btn" onclick="chET(${idx},-1)">−</button>
         <div class="step-val" id="et-${idx}">${E.tricks[idx]}</div>
         <button class="step-btn" onclick="chET(${idx},1)">+</button>
       </div>
@@ -1485,7 +1485,7 @@ function renderEditPanel(idx){
       <div class="bonus-grid">${bonusRows}</div>
       <div class="preview-box">
         <div class="preview-lbl">Score for Round ${rn}</div>
-        <div class="preview-val" id="epv-${idx}">â</div>
+        <div class="preview-val" id="epv-${idx}">—</div>
         <div class="preview-note" id="epn-${idx}"></div>
       </div>
     </div>
@@ -1526,7 +1526,7 @@ function updateEditPreview(idx){
   pv.textContent=`${sign}${sc}`;
   pv.style.color=sc>0?'var(--success)':sc<0?'var(--danger)':'var(--text-muted)';
   if(bonus>0&&hit) pn.textContent=`Includes +${bonus} bonus`;
-  else if(bonus>0&&!hit) pn.textContent='â ï¸ Bonus lost â bid missed';
+  else if(bonus>0&&!hit) pn.textContent='⚠️ Bonus lost — bid missed';
   else pn.textContent='';
 }
 
@@ -1544,7 +1544,7 @@ function saveEditRound(){
     p.bonusData[ri]=raw;
     p.scores[ri]=sc;
   });
-  toast('â Round updated');
+  toast('✓ Round updated');
   if(E.from==='s-final'){ showFinal(); }
   else { showBoard(); }
 }
@@ -1553,9 +1553,9 @@ function cancelEdit(){
   show(E.from);
 }
 
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ══════════════════════════════════════════════════════════
 //  NEW GAME CONFIRM
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ══════════════════════════════════════════════════════════
 function confirmNewGame(){
   // If we're on setup or final, just go directly
   const active=document.querySelector('.screen.active').id;
@@ -1573,14 +1573,14 @@ function doNewGame(){
 
 // PWA manifest is now external: manifest.json
 
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ══════════════════════════════════════════════════════════
 //  BOOT
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ══════════════════════════════════════════════════════════
 initSetup();
 
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ══════════════════════════════════════════════════════════
 //  SERVICE WORKER REGISTRATION
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ══════════════════════════════════════════════════════════
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./sw.js')
