@@ -225,7 +225,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
   padding:0 6px;display:flex;align-items:center;gap:8px;
 }
 .drop-indicator{
-  height:2px;background:var(--gold);border-radius:2px;
+  height:2px;background:var(--gold);border-radius:.px;
   margin:0 8px;transition:opacity 0.1s;
 }
 
@@ -319,7 +319,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
   color:var(--text);min-width:22px;text-align:center;
 }
 
-/* ── SCOREBOARD Vu2500─ */
+/* ── SCOREBOARD ── */
 .res-row{
   display:flex;justify-content:space-between;align-items:center;
   padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.05);
@@ -359,13 +359,9 @@ input[type=text]::placeholder{color:var(--text-muted)}
 .stbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .stbl-wrap .stbl{width:auto;min-width:100%;border-collapse:collapse}
 /* sticky left cols */
-.stbl-wrap .stbl-s-pos{
-  position:sticky;left:0;z-index:3;background:var(--navy-card);
-  width:28px;min-width:28px;
-}
 .stbl-wrap .stbl-s-name{
-  position:sticky;left:28px;z-index:3;background:var(--navy-card);
-  min-width:90px;max-width:130px;
+  position:sticky;left:0;z-index:3;background:var(--navy-card);
+  min-width:80px;max-width:120px;
 }
 /* sticky right col */
 .stbl-wrap .stbl-s-tot{
@@ -373,7 +369,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
   min-width:56px;border-left:1px solid var(--border);
 }
 /* round column header */
-.stbl-rnd-hdr{min-width:100px;white-space:nowrap}
+.stbl-rnd-hdr{min-width:76px;white-space:nowrap}
 .stbl-edit-btn{
   background:none;border:none;cursor:pointer;color:var(--text-muted);
   font-size:0.8rem;padding:0 2px;margin-left:3px;vertical-align:middle;
@@ -381,16 +377,13 @@ input[type=text]::placeholder{color:var(--text-muted)}
 }
 .stbl-edit-btn:hover,.stbl-edit-btn:active{color:var(--gold)}
 /* rich round cell */
-.stbl-cell{padding:8px 7px;vertical-align:top;min-width:100px}
+.stbl-cell{padding:8px 6px;vertical-align:top;min-width:76px}
 .stbl-cell-sc{
   font-family:'Cinzel',serif;font-size:1.05rem;font-weight:700;line-height:1;
 }
 .stbl-cell-detail{
-  font-size:0.7rem;color:var(--text-muted);margin-top:4px;white-space:nowrap;
+  font-size:0.68rem;color:var(--text-muted);margin-top:4px;white-space:nowrap;
 }
-.stbl-cell-bonus{font-size:0.68rem;margin-top:2px}
-.stbl-cell-bonus.earned{color:var(--gold)}
-.stbl-cell-bonus.lost{color:var(--text-muted)}
 
 /* ── FINAL SCREEN ── */
 .winner-box{
@@ -562,7 +555,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
 
 <!-- ════════════════════════════════════════════════════════ -->
 <!--  SCREEN: SETUP                                         -->
-<!-- ════════════════════════════════════════════════════════ -->
+<!-- ════════════════════════════════════════════════════════ -->════════════════════════════════════════════════════════ -->
 <div id="s-setup" class="screen active">
   <div class="content">
     <div class="logo">
@@ -575,7 +568,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
       <div class="card-title">⚔️ Scoring Mode</div>
       <div class="seg" id="mode-seg">
         <button class="seg-btn on" onclick="selMode('classic')">Classic</button>
-        <button class="seg-btn" onclick="selMode('rascal')">Rascal</button>
+        <button class="seg-btn" onclick="selMode('rascal')">Rastal</button>
       </div>
       <div class="mode-desc" id="mode-desc"></div>
     </div>
@@ -629,7 +622,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
   </div>
 </div>
 
-<!-- ════════════════════════════════════════════════════════ -->
+<!-- ════════════════════════════════════════════════════════════════════════════════════════ -->
 <!--  SCREEN: SCORE ENTRY                                   -->
 <!-- ════════════════════════════════════════════════════════ -->
 <div id="s-score" class="screen">
@@ -758,17 +751,17 @@ input[type=text]::placeholder{color:var(--text-muted)}
 <script>
 // ╔═════════════════════════════════════════════════════════╗
 // ║  SKULL KING SCORER — v1.0                               ║
-// ╚═════════════════════════════════════════════════════════╝
+// ╚══════════════════════════════════════════════════════════╝
 
 // ── Bonus definitions ──────────────────────────────────────
 const BONUSES = [
   {key:'sk',    label:'☠️ Skull King Captured',        pts:50, max:1},
-  {key:'psk',   label:'🏴 Pirate Captured by SK',      pts:30, max:2},
+  {key:'psk',   label:'🏴 Pirate Captured by SK',      pts:30, max:5},
   {key:'msk',   label:'🧜 Mermaid Captures SK',         pts:40, max:2},
   {key:'mp',    label:'🐚 Mermaid by Pirate',          pts:20, max:2},
   {key:'b14',   label:'⚑ Black 14 Flag',               pts:20, max:1},
   {key:'c14',   label:'🏳 Colored 14 Flag (each)',      pts:10, max:3},
-  {key:'r10',   label:'🎲 Rascal Wager +10',            pts:10, max:2},
+  {key:'r10',   label:'🎲 Rascal Wager +10',            pts:10, max:1},
   {key:'r20',   label:'🎲 Rascal Wager +20',            pts:20, max:1},
 ];
 
@@ -796,7 +789,7 @@ function show(id){
   window.scrollTo(0,0);
 }
 
-// ── Toast ─────────────────────────────────────────────────
+// ── Toast ──────────────────────────────────────────────────
 let _tt;
 function toast(msg){
   const el=document.getElementById('toast');
@@ -804,7 +797,7 @@ function toast(msg){
   clearTimeout(_tt); _tt=setTimeout(()=>el.classList.remove('show'),2600);
 }
 
-// ══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
 //  SAVED PLAYERS (localStorage)
 // ══════════════════════════════════════════════════════════
 function getSaved(){
@@ -955,7 +948,7 @@ function _startDrag(idx, touch){
 function _moveDrag(touch){
   if(!_drag.active||!_drag.clone) return;
   const rect=_drag.ghost.getBoundingClientRect();
-  _drag.clone.style.transform=`translate(${rect.left}px,${touch.clientY-rect.height/2}py)`;
+  _drag.clone.style.transform=`translate(${rect.left}px,${touch.clientY-rect.height/2}px)`;
 
   // find drop position
   const rows=[...document.querySelectorAll('#plist .player-row:not(.dragging-ghost)')];
@@ -1291,7 +1284,6 @@ function showBoard(){
 function buildStandingsTable(id,numRounds){
   const t=document.getElementById(id);
   const stand=[...G.players].sort((a,b)=>total(b)-total(a));
-  const medals=['🥇','🥈','🥉','4.','5.','6.'];
 
   // Round column headers with pencil edit button
   const rndhdr=Array.from({length:numRounds},(_,i)=>{
@@ -1307,26 +1299,18 @@ function buildStandingsTable(id,numRounds){
       const sc=p.scores[ri];
       const bid=p.bids[ri];
       const tricks=p.tricks[ri];
-      const bonus=p.bonuses[ri]??0;
       const hit=bid===tricks;
-      // Standard points (score without bonus contribution)
-      const stdSc=calcScore(bid,tricks,0,ri+1,G.mode);
       const sign=sc>0?'+':'';
       const cls=sc>0?'pos-green':sc<0?'pos-red':'pos-muted';
       const hitMark=hit?'<span class="pos-green">✓</span>':'<span class="pos-red">✗</span>';
-      let bonusLine='';
-      if(bonus>0&&hit) bonusLine=`<div class="stbl-cell-bonus earned">+${bonus} bonus</div>`;
-      else if(bonus>0&&!hit) bonusLine=`<div class="stbl-cell-bonus lost">bonus lost</div>`;
       return `<td class="stbl-cell">
         <div class="stbl-cell-sc ${cls}">${sign}${sc}</div>
-        <div class="stbl-cell-detail">Bid ${bid} · Got ${tricks} ${hitMark}</div>
-        ${bonusLine}
+        <div class="stbl-cell-detail">bid ${bid}-${tricks} ${hitMark}</div>
       </td>`;
     }).join('');
 
     return `<tr>
-      <td class="stbl-pos stbl-s-pos">${pos+1}</td>
-      <td class="stbl-s-name">${medals[pos]||''} ${p.name}</td>
+      <td class="stbl-s-name">${p.name}</td>
       ${cells}
       <td class="stbl-tot stbl-s-tot">${total(p)}</td>
     </tr>`;
@@ -1334,7 +1318,6 @@ function buildStandingsTable(id,numRounds){
 
   t.innerHTML=`
     <thead><tr>
-      <th class="stbl-s-pos" style="width:28px"></th>
       <th class="stbl-s-name" style="text-align:left">Player</th>
       ${rndhdr}
       <th class="stbl-s-tot">Total</th>
@@ -1355,7 +1338,7 @@ function nextRound(){
 function showFinal(){
   const stand=[...G.players].sort((a,b)=>total(b)-total(a));
   const winner=stand[0];
-  document.getElementById('w-name').textContent=winner.name;
+  document.getElementById('uname').textContent=winner.name;
   document.getElementById('w-score').textContent=`with ${total(winner)} points`;
 
   // Final standings
@@ -1418,7 +1401,7 @@ function showFinal(){
   show('s-final');
 }
 
-// ══════════════════════════════════════════════════════════
+// ═════════════════════════════════════════════════════════
 //  EDIT PAST ROUND
 // ══════════════════════════════════════════════════════════
 const E={ri:0,bids:[],tricks:[],bonuses:[],tab:0,from:'s-board'};
@@ -1560,6 +1543,8 @@ function cancelEdit(){
 }
 
 // ══════════════════════════════════════════════════════════
+//  NEW GAME CONFIRM
+// ══════════════════════════════════════════════════════════
 function confirmNewGame(){
   // If we're on setup or final, just go directly
   const active=document.querySelector('.screen.active').id;
@@ -1577,7 +1562,7 @@ function doNewGame(){
 
 // PWA manifest is now external: manifest.json
 
-// ══════════════════════════════════════════════════════════
+// ═════════════════════════════════════════════════════════
 //  BOOT
 // ══════════════════════════════════════════════════════════
 initSetup();
