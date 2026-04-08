@@ -773,14 +773,11 @@ input[type=text]::placeholder{color:var(--text-muted)}
 
 // ── Bonus definitions ──────────────────────────────────────
 const BONUSES = [
-  {key:'sk',    label:'☠️ Skull King Captured',        pts:50, max:1},
-  {key:'psk',   label:'🏴 Pirate Captured by SK',      pts:30, max:5},
-  {key:'msk',   label:'🧜 Mermaid Captures SK',         pts:40, max:2},
-  {key:'mp',    label:'🐚 Mermaid by Pirate',          pts:20, max:2},
-  {key:'b14',   label:'⚑ Black 14 Flag',               pts:20, max:1},
+  {key:'msk',   label:'💀 SK Captured by Mermaid',         pts:40, max:1},
+  {key:'psk',   label:'⚓ Pirate Captured by SK',      pts:30, max:5},
+  {key:'mp',    label:'🧜 Mermaid Captured by Pirate',          pts:20, max:2},
+  {key:'b14',   label:'🏴 Black 14 Flag',               pts:20, max:1},
   {key:'c14',   label:'🏳 Colored 14 Flag (each)',      pts:10, max:3},
-  {key:'r10',   label:'🎲 Rascal Wager +10',            pts:10, max:1},
-  {key:'r20',   label:'🎲 Rascal Wager +20',            pts:20, max:1},
 ];
 
 const ICONS = ['🦜','⚓','🗡️','🏴‍☠️','💀','🐚'];
@@ -1457,8 +1454,6 @@ function renderEditPanel(idx){
   const p=G.players[idx];
   const rh=E.ri+1;
   const bonusRows=BONUSES.map(b=>`
-    <div class="bonus-item">
-    USES.map(b=>`
     <div class="bonus-item">
       <div class="bonus-lbl">${b.label}</div>
       <div class="bonus-pts">+${b.pts}${b.max>1?' ea':''}</div>
