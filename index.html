@@ -620,11 +620,11 @@ input[type=text]::placeholder{color:var(--text-muted)}
       <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:12px">You have an unfinished game in progress</div>
       <div style="display:flex;gap:8px">
         <button class="btn btn-primary" style="flex:1" onclick="resumeGame()">Resume Game</button>
-        <button class="btn btn-danger-outline" style="flex:1" onclick="confirmDeleteGame()">Delete</button>
+        <button class="btn btn-danger-outline" style="flex:1" onclick="startNewGame()">New Game</button>
       </div>
     </div>
 
-    <button class="btn btn-primary mt16" onclick="startGame()">Set Sail</button>
+    <button class="btn btn-primary mt16" id="btn-set-sail" onclick="startGame()">Set Sail</button>
     <div class="safe"></div>
   </div>
 </div>
@@ -954,6 +954,17 @@ function resumeGame(){
 function confirmDeleteGame(){
   if(confirm('Delete the saved game? This cannot be undone.')){
     deleteSavedGame();
+  }
+}
+
+function startNewGame(){
+  if(hasSavedGame()){
+    if(confirm('Start a new game? Your saved game will be deleted.')){
+      deleteSavedGame();
+      startGame();
+    }
+  } else {
+    startGame();
   }
 }
 
