@@ -97,11 +97,17 @@ Add your requested changes below. I'll check this file before each session and i
 - **Description**: Remove the numbered circles next to player names on bid page
 - **Details**: Keep row numbers on score page, just remove from bid page
 
-### Remove "Fix Past Rounds" from final standings
+### Add continue or new game choice
 - **Status**: pending
-- **Priority**: medium
-- **Description**: Remove the "Fix a Past Round" section from the game complete screen
-- **Details**: This section shows edit buttons for past rounds - remove entirely
+- **Priority**: high
+- **Description**: When starting a new game, let user choose to continue old game or start fresh (deletes old)
+- **Details**: If saved game exists, show both "Resume" and "New Game" buttons on setup screen
+
+### Confirm pencil icons work on standings page
+- **Status**: pending
+- **Priority**: high
+- **Description**: Verify pencil icons on standings page allow editing previous rounds
+- **Details**: Should be able to click any round's pencil icon to edit that round
 
 ---
 
