@@ -1393,7 +1393,7 @@ function buildStandingsTable(id,numRounds){
   // Round column headers with pencil edit button
   const rndhdr=Array.from({length:numRounds},(_,i)=>{
     const r=i+1;
-    return `<th class="stbl-rnd-hdr">R${r}<button class="stbl-edit-btn" onclick="openEditRound(${r},'s-board')" title="Edit Round ${r}"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2l3 3L5 14l-4 1 1-4L11 2z"/></svg></button></th>`;
+    return `<th class="stbl-rnd-hdr">R${r}<button class="stbl-edit-btn" onclick="event.stopPropagation();event.preventDefault();openEditRound(${r},'s-board')" title="Edit Round ${r}"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2l3 3L5 14l-4 1 1-4L11 2z"/></svg></button></th>`;
   }).join('');
 
   // Player rows with rich round cells
@@ -1503,19 +1503,25 @@ function showFinal(){
 const E={ri:0,bids:[],tricks:[],bonuses:[],tab:0,from:'s-board'};
 
 function openEditRound(r,from){
-  E.ri=r-1; E.from=from||'s-board'; E.tab=0;
-  const ri=E.ri;
-  E.bids=G.players.map(p=>p.bids[ri]||0);
-  E.tricks=G.players.map(p=>p.tricks[ri]||0);
-  E.bonuses=G.players.map(p=>({...(p.bonusData[ri]||Object.fromEntries(BONUSES.map(b=>[b.key,0])))}));
-  const rn=r;
-  document.getElementById('edit-badge').textContent=`Editing Round ${rn}`;
-  document.getElementById('edit-title').textContent=`Editing Round ${rn}`;
-  document.getElementById('edit-cards-note').textContent=
-    `${rn} card${rn>1?'s':''} were dealt this round`;
-  renderEditTabs();
-  renderEditPanel(0);
-  show('s-edit');
+  try{
+    E.ri=r-1; E.from=from||'s-board'; E.tab=0;
+    const ri=E.ri;
+    E.bids=G.players.map(p=>p.bids[ri]||0);
+    E.tricks=G.players.map(p=>p.tricks[ri]||0);
+    E.bonuses=G.players.map(p=>({...(p.bonusData[ri]||Object.fromEntries(BONUSES.map(b=>[b.key,0])))}));
+    const rn=r;
+    const editBadge=document.getElementById('edit-badge');
+    const editTitle=document.getElementById('edit-title');
+    const editNote=document.getElementById('edit-cards-note');
+    if(editBadge) editBadge.textContent=`Editing Round ${rn}`;
+    if(editTitle) editTitle.textContent=`Editing Round ${rn}`;
+    if(editNote) editNote.textContent=`${rn} card${rn>1?'s':''} were dealt this round`;
+    renderEditTabs();
+    renderEditPanel(0);
+    show('s-edit');
+  }catch(e){
+    toast('Error opening edit screen: '+e.message);
+  }
 }
 
 function renderEditTabs(){
