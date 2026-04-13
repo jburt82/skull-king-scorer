@@ -717,10 +717,6 @@ input[type=text]::placeholder{color:var(--text-muted)}
       <div class="card-title">Round History</div>
       <div id="final-hist" style="overflow-x:auto"></div>
     </div>
-    <div class="card past-rounds-card">
-      <div class="card-title">Fix a Past Round</div>
-      <div class="round-btns" id="edit-round-btns-final"></div>
-    </div>
     <button class="btn btn-primary mt8" onclick="confirmNewGame()">New Game</button>
     <div class="safe"></div>
   </div>
@@ -1486,12 +1482,6 @@ function showFinal(){
       <tbody>${rows}</tbody>
     </table>
   `;
-
-  // ── Past rounds edit buttons (final screen) - disabled per user request ──
-  const eBtnsF=document.getElementById('edit-round-btns-final');
-  if(eBtnsF){
-    eBtnsF.style.display='none';
-  }
 
   // Clear saved game since the game is complete
   localStorage.removeItem('skullKingGameState');
