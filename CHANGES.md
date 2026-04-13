@@ -50,10 +50,58 @@ Add your requested changes below. I'll check this file before each session and i
 - **Details**: Show delete button next to "Resume Game" option if a saved game exists
 
 ### Fix back button history tracking
+- **Status**: in-progress
+- **Priority**: high
+- **Description**: Back button toggles between same two screens instead of going back through history
+- **Details**: Round 3 back button goes to round 2, but clicking back again toggles between round 2 and 3 instead of going to round 1
+
+### Fix pencil icon for editing rounds (still broken)
 - **Status**: pending
 - **Priority**: high
-- **Description**: Back button not properly tracking previous page navigation
-- **Details**: Currently goes to hardcoded screens instead of actual previous page
+- **Description**: Pencil edit buttons on standings pages not opening edit modal
+- **Details**: Clicking edit button should open s-edit screen, but nothing happens
+
+### Games not saving when exited prematurely
+- **Status**: pending
+- **Priority**: high
+- **Description**: No option to resume if user closes game mid-play
+- **Details**: Need to trigger save on every screen transition, not just after calcScores
+
+### Make flag icons consistent
+- **Status**: pending
+- **Priority**: medium
+- **Description**: Black flag and colored flag should look the same except color
+- **Details**: Black flag = 🏴 (black), Colored flag = green or yellow version. Make them match visually
+
+### Add red shield with crossing swords icon
+- **Status**: pending
+- **Priority**: medium
+- **Description**: Need custom icon for new bonus (looks like pirate/battle icon)
+- **Details**: SVG or emoji of red shield with two swords crossing
+
+### Add "Other" bonus type with coins icon
+- **Status**: pending
+- **Priority**: medium
+- **Description**: New bonus category for miscellaneous bonuses
+- **Details**: Icon = coins, increments by tens (0-50 or similar max)
+
+### Add row numbers to standings page
+- **Status**: pending
+- **Priority**: low
+- **Description**: Number each row on the standings/board page (1, 2, 3, etc.)
+- **Details**: Display on left side like the bid and score pages
+
+### Remove row numbers from bid page
+- **Status**: pending
+- **Priority**: low
+- **Description**: Remove the numbered circles next to player names on bid page
+- **Details**: Keep row numbers on score page, just remove from bid page
+
+### Remove "Fix Past Rounds" from final standings
+- **Status**: pending
+- **Priority**: medium
+- **Description**: Remove the "Fix a Past Round" section from the game complete screen
+- **Details**: This section shows edit buttons for past rounds - remove entirely
 
 ---
 
