@@ -615,16 +615,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
       </div>
     </div>
 
-    <div id="saved-game-card" class="card" style="display:none;border-color:var(--gold-dim)">
-      <div class="card-title" style="color:var(--gold)">Saved Game</div>
-      <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:12px">You have an unfinished game in progress</div>
-      <div style="display:flex;gap:8px">
-        <button class="btn btn-primary" style="flex:1" id="btn-resume" onclick="resumeGame()">Resume Game</button>
-        <button class="btn btn-danger-outline" style="flex:1" onclick="startNewGame()">New Game</button>
-      </div>
-    </div>
-
-    <button class="btn btn-primary mt16" id="btn-set-sail" onclick="startGame()">Set Sail</button>
+    <button class="btn btn-primary mt16" onclick="handleStartGame()">Set Sail</button>
     <div class="safe"></div>
   </div>
 </div>
@@ -873,8 +864,6 @@ function hasSavedGame(){
 }
 function deleteSavedGame(){
   localStorage.removeItem('skullKingGameState');
-  toast('Saved game deleted');
-  updateSavedGameUI();
 }
 
 function renderSavedChips(){
@@ -933,35 +922,11 @@ function initSetup(){
   document.getElementById('rnds-val').textContent='10';
   renderPlist();
   renderSavedChips();
-  updateSavedGameUI();
 }
 
-function updateSavedGameUI(){
-  const card=document.getElementById('saved-game-card');
-  const resumeBtn=document.getElementById('btn-resume');
-  const hasSaved=hasSavedGame();
-  card.style.display=hasSaved?'block':'none';
-  if(resumeBtn) resumeBtn.disabled=!hasSaved;
-}
-
-function resumeGame(){
-  if(loadGameState()){
-    saveCurrentNames();
-    startRound();
-  } else {
-    toast('Could not load saved game');
-  }
-}
-
-function confirmDeleteGame(){
-  if(confirm('Delete the saved game? This cannot be undone.')){
-    deleteSavedGame();
-  }
-}
-
-function startNewGame(){
+function handleStartGame(){
   if(hasSavedGame()){
-    if(confirm('Start a new game? Your saved game will be deleted.')){
+    if(confirm('You have a game in progress. Starting a new game will delete your saved progress. Continue?')){
       deleteSavedGame();
       startGame();
     }
