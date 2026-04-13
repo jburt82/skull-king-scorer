@@ -859,7 +859,6 @@ function setSaved(arr){localStorage.setItem('skullKingSaved',JSON.stringify(arr)
 // ══════════════════════════════════════════════════════════
 function saveGameState(){
   localStorage.setItem('skullKingGameState',JSON.stringify(G));
-  toast('Game saved');
 }
 function loadGameState(){
   try{
@@ -1207,7 +1206,6 @@ function renderAllScoreRows(){
     div.className='sc-row fadein';
     div.innerHTML=`
       <div class="sc-row-top">
-        <span class="sc-row-num">${i+1}</span>
         <span class="sc-row-name">${p.name}</span>
         <span class="sc-row-bid">Bid <b>${G.tempBids[i]}</b></span>
       </div>
