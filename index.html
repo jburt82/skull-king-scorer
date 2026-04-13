@@ -451,6 +451,13 @@ input[type=text]::placeholder{color:var(--text-muted)}
 }
 .sc-row-top{display:flex;align-items:center;gap:8px;margin-bottom:10px}
 .sc-row-icon{font-size:1.2rem;flex-shrink:0}
+.sc-row-num{
+  display:flex;align-items:center;justify-content:center;
+  width:32px;height:32px;border-radius:50%;
+  background:rgba(201,162,39,0.15);color:var(--gold);
+  font-family:'Cinzel',serif;font-size:0.85rem;font-weight:700;
+  flex-shrink:0;
+}
 .sc-row-name{
   font-family:'Cinzel',serif;font-size:0.95rem;color:var(--text);
   flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
@@ -597,7 +604,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
     </div>
 
     <div class="card">
-      <div class="card-title">Players <span style="color:var(--text-muted);font-size:0.8rem;font-family:inherit;font-weight:400;letter-spacing:0">(2 – 6)</span></div>
+      <div class="card-title">Players <span style="color:var(--text-muted);font-size:0.8rem;font-family:inherit;font-weight:400;letter-spacing:0">(2 – 8)</span></div>
       <div class="saved-chips-wrap">
         <div class="saved-chips-lbl">Saved Players <span>— tap to add</span></div>
         <div class="chips-row" id="saved-chips"></div>
@@ -605,6 +612,15 @@ input[type=text]::placeholder{color:var(--text-muted)}
       <div id="plist"></div>
       <div class="add-remove-row">
         <button class="btn btn-ghost btn-sm" id="btn-add" onclick="addPlayer()">+ Add Player</button>
+      </div>
+    </div>
+
+    <div id="saved-game-card" class="card" style="display:none;border-color:var(--gold-dim)">
+      <div class="card-title" style="color:var(--gold)">Saved Game</div>
+      <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:12px">You have an unfinished game in progress</div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-primary" style="flex:1" onclick="resumeGame()">Resume Game</button>
+        <button class="btn btn-danger-outline" style="flex:1" onclick="confirmDeleteGame()">Delete</button>
       </div>
     </div>
 
@@ -618,7 +634,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
 <!-- ════════════════════════════════════════════════════════ -->
 <div id="s-bid" class="screen">
   <div class="hdr">
-    <button class="hdr-back" onclick="show('s-setup')" title="Back to Setup">&#8592;</button>
+    <button class="hdr-back" onclick="goBack()" title="Back">&#8592;</button>
     <h1>SKULL KING</h1>
     <div class="hdr-sub" id="bid-badge">Round 1 of 10</div>
   </div>
@@ -641,7 +657,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
 <!-- ════════════════════════════════════════════════════════ -->
 <div id="s-score" class="screen">
   <div class="hdr">
-    <button class="hdr-back" onclick="show('s-bid')" title="Back to Bids">&#8592;</button>
+    <button class="hdr-back" onclick="goBack()" title="Back">&#8592;</button>
     <h1>SKULL KING</h1>
     <div class="hdr-sub" id="sc-badge">Round 1 — Enter Scores</div>
   </div>
@@ -658,7 +674,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
 <!-- ════════════════════════════════════════════════════════ -->
 <div id="s-board" class="screen">
   <div class="hdr">
-    <button class="hdr-back" onclick="show('s-score')" title="Back to Scores">&#8592;</button>
+    <button class="hdr-back" onclick="goBack()" title="Back">&#8592;</button>
     <h1>SKULL KING</h1>
     <div class="hdr-sub" id="board-badge">After Round 1</div>
   </div>
@@ -682,7 +698,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
 <!-- ════════════════════════════════════════════════════════ -->
 <div id="s-final" class="screen">
   <div class="hdr">
-    <button class="hdr-back" onclick="show('s-board')" title="Back to Board">&#8592;</button>
+    <button class="hdr-back" onclick="goBack()" title="Back">&#8592;</button>
     <h1>SKULL KING</h1>
     <div class="hdr-sub">Game Complete</div>
   </div>
@@ -774,10 +790,11 @@ input[type=text]::placeholder{color:var(--text-muted)}
 // ── Bonus definitions ──────────────────────────────────────
 const BONUSES = [
   {key:'msk',   label:'💀 SK Captured by Mermaid',         pts:40, max:1},
-  {key:'psk',   label:'⚓ Pirate Captured by SK',      pts:30, max:5},
+  {key:'psk',   label:'⚔️ Special Capture',               pts:30, max:5},
   {key:'mp',    label:'🧜 Mermaid Captured by Pirate',          pts:20, max:2},
   {key:'b14',   label:'🏴 Black 14 Flag',               pts:20, max:1},
-  {key:'c14',   label:'🏳 Colored 14 Flag (each)',      pts:10, max:3},
+  {key:'c14',   label:'🚩 Colored 14 Flag (each)',      pts:10, max:3},
+  {key:'other', label:'🪙 Other (each)',                pts:10, max:5},
 ];
 
 const ICONS = ['🦜','⚓','🗡️','🏴‍☠️','💀','🐚'];
@@ -798,10 +815,31 @@ const G = {
 };
 
 // ── Screen helper ──────────────────────────────────────────
+// ──  Navigation History ───────────────────────────────────
+let _navHistory=['s-setup'];
+
 function show(id){
+  // Auto-save game state if game is in progress
+  if(G.players.length>0 && id!=='s-setup' && id!=='s-final'){
+    saveGameState();
+  }
+  // Don't add duplicates to history (e.g., if already on same screen)
+  if(_navHistory[_navHistory.length-1]!==id){
+    _navHistory.push(id);
+  }
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   window.scrollTo(0,0);
+}
+
+function goBack(){
+  if(_navHistory.length>1){
+    _navHistory.pop(); // Remove current screen
+    const prevScreen=_navHistory[_navHistory.length-1];
+    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+    document.getElementById(prevScreen).classList.add('active');
+    window.scrollTo(0,0);
+  }
 }
 
 // ── Toast ──────────────────────────────────────────────────
@@ -819,6 +857,30 @@ function getSaved(){
   try{return JSON.parse(localStorage.getItem('skullKingSaved')||'[]');}catch{return [];}
 }
 function setSaved(arr){localStorage.setItem('skullKingSaved',JSON.stringify(arr));}
+
+// ══════════════════════════════════════════════════════════
+//  SAVE/LOAD GAME STATE (localStorage)
+// ══════════════════════════════════════════════════════════
+function saveGameState(){
+  localStorage.setItem('skullKingGameState',JSON.stringify(G));
+  toast('Game saved');
+}
+function loadGameState(){
+  try{
+    const saved=JSON.parse(localStorage.getItem('skullKingGameState'));
+    if(!saved) return null;
+    Object.assign(G,saved);
+    return true;
+  }catch{return null;}
+}
+function hasSavedGame(){
+  return !!localStorage.getItem('skullKingGameState');
+}
+function deleteSavedGame(){
+  localStorage.removeItem('skullKingGameState');
+  toast('Saved game deleted');
+  updateSavedGameUI();
+}
 
 function renderSavedChips(){
   const saved=getSaved();
@@ -842,7 +904,7 @@ function renderSavedChips(){
         const arr=getSaved(); arr.splice(i,1); setSaved(arr); renderSavedChips();
         return;
       }
-      if(sPlayers.length>=6){toast('Max 6 players');return;}
+      if(sPlayers.length>=8){toast('Max 8 players');return;}
       if(active.has(name.toLowerCase())){toast(name+' already in lineup');return;}
       sPlayers.push(name);
       renderPlist();
@@ -876,6 +938,28 @@ function initSetup(){
   document.getElementById('rnds-val').textContent='10';
   renderPlist();
   renderSavedChips();
+  updateSavedGameUI();
+}
+
+function updateSavedGameUI(){
+  const card=document.getElementById('saved-game-card');
+  if(hasSavedGame()) card.style.display='block';
+  else card.style.display='none';
+}
+
+function resumeGame(){
+  if(loadGameState()){
+    saveCurrentNames();
+    startRound();
+  } else {
+    toast('Could not load saved game');
+  }
+}
+
+function confirmDeleteGame(){
+  if(confirm('Delete the saved game? This cannot be undone.')){
+    deleteSavedGame();
+  }
 }
 
 function renderPlist(){
@@ -897,7 +981,7 @@ function renderPlist(){
     el.appendChild(d);
     initDragHandle(d.querySelector('.drag-handle'), i);
   });
-  document.getElementById('btn-add').disabled=sPlayers.length>=6;
+  document.getElementById('btn-add').disabled=sPlayers.length>=8;
 }
 
 // ── DRAG TO REORDER ──────────────────────────────────────────
@@ -1026,7 +1110,7 @@ function _cancelDrag(){
 }
 
 function addPlayer(){
-  if(sPlayers.length>=6){toast('Max 6 players');return;}
+  if(sPlayers.length>=8){toast('Max 8 players');return;}
   sPlayers.push(''); renderPlist(); renderSavedChips();
 }
 function rmPlayer(idx){
@@ -1061,6 +1145,8 @@ function startGame(){
 //  ROUND FLOW
 // ══════════════════════════════════════════════════════════
 function startRound(){
+  // Reset navigation history for new round
+  _navHistory=['s-bid'];
   const n=G.players.length;
   G.tempBids=new Array(n).fill(0);
   G.tempTricks=new Array(n).fill(0);
@@ -1125,6 +1211,7 @@ function renderAllScoreRows(){
     div.className='sc-row fadein';
     div.innerHTML=`
       <div class="sc-row-top">
+        <span class="sc-row-num">${i+1}</span>
         <span class="sc-row-name">${p.name}</span>
         <span class="sc-row-bid">Bid <b>${G.tempBids[i]}</b></span>
       </div>
@@ -1277,6 +1364,7 @@ function calcScores(){
     p.bonusData.push(raw);
     p.scores.push(sc);
   });
+  saveGameState();
   showBoard();
 }
 
@@ -1322,6 +1410,7 @@ function buildStandingsTable(id,numRounds){
     }).join('');
 
     return `<tr>
+      <td class="stbl-pos">${pos+1}</td>
       <td class="stbl-s-name">${p.name}</td>
       ${cells}
       <td class="stbl-tot stbl-s-tot">${total(p)}</td>
@@ -1330,6 +1419,7 @@ function buildStandingsTable(id,numRounds){
 
   t.innerHTML=`
     <thead><tr>
+      <th class="stbl-pos">#</th>
       <th class="stbl-s-name" style="text-align:left">Player</th>
       ${rndhdr}
       <th class="stbl-s-tot">Total</th>
@@ -1341,6 +1431,7 @@ function buildStandingsTable(id,numRounds){
 function nextRound(){
   if(G.round>=G.rounds){ showFinal(); return; }
   G.round++;
+  saveGameState();
   startRound();
 }
 
@@ -1358,10 +1449,9 @@ function showFinal(){
   ft.innerHTML=`
     <thead><tr><th></th><th style="text-align:left">Player</th><th>Score</th></tr></thead>
     <tbody>${stand.map((p,i)=>{
-      const medals=['🥇','🥈','🥉','4️⃣','5️⃣','6️⃣'];
       return `<tr>
         <td class="stbl-pos">${i+1}</td>
-        <td>${medals[i]||''} ${p.name}</td>
+        <td>${p.name}</td>
         <td class="stbl-tot">${total(p)}</td>
       </tr>`;
     }).join('')}</tbody>
@@ -1397,33 +1487,28 @@ function showFinal(){
     </table>
   `;
 
-  // ── Past rounds edit buttons (final screen) ──
+  // ── Past rounds edit buttons (final screen) - disabled per user request ──
   const eBtnsF=document.getElementById('edit-round-btns-final');
   if(eBtnsF){
-    eBtnsF.innerHTML='';
-    for(let r=1;r<=G.rounds;r++){
-      const btn=document.createElement('button');
-      btn.className='round-btn';
-      btn.textContent=`Round ${r}`;
-      btn.onclick=(r=>()=>openEditRound(r,'s-final'))(r);
-      eBtnsF.appendChild(btn);
-    }
+    eBtnsF.style.display='none';
   }
 
+  // Clear saved game since the game is complete
+  localStorage.removeItem('skullKingGameState');
   show('s-final');
 }
 
 // ══════════════════════════════════════════════════════════
 //  EDIT PAST ROUND
 // ══════════════════════════════════════════════════════════
-const E={ri:0,bids:[],tricks:[],bonuses:[],tab:0,from2:'s-board'};
+const E={ri:0,bids:[],tricks:[],bonuses:[],tab:0,from:'s-board'};
 
 function openEditRound(r,from){
   E.ri=r-1; E.from=from||'s-board'; E.tab=0;
   const ri=E.ri;
-  E.bids=G.players.map(p=>p.bids[ri]);
-  E.tricks=G.players.map(p=>p.tricks[ri]);
-  E.bonuses=G.players.map(p=>({...p.bonusData[ri]}));
+  E.bids=G.players.map(p=>p.bids[ri]||0);
+  E.tricks=G.players.map(p=>p.tricks[ri]||0);
+  E.bonuses=G.players.map(p=>({...(p.bonusData[ri]||Object.fromEntries(BONUSES.map(b=>[b.key,0])))}));
   const rn=r;
   document.getElementById('edit-badge').textContent=`Editing Round ${rn}`;
   document.getElementById('edit-title').textContent=`Editing Round ${rn}`;
