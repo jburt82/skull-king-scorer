@@ -619,7 +619,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
       <div class="card-title" style="color:var(--gold)">Saved Game</div>
       <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:12px">You have an unfinished game in progress</div>
       <div style="display:flex;gap:8px">
-        <button class="btn btn-primary" style="flex:1" onclick="resumeGame()">Resume Game</button>
+        <button class="btn btn-primary" style="flex:1" id="btn-resume" onclick="resumeGame()">Resume Game</button>
         <button class="btn btn-danger-outline" style="flex:1" onclick="startNewGame()">New Game</button>
       </div>
     </div>
@@ -938,8 +938,10 @@ function initSetup(){
 
 function updateSavedGameUI(){
   const card=document.getElementById('saved-game-card');
-  if(hasSavedGame()) card.style.display='block';
-  else card.style.display='none';
+  const resumeBtn=document.getElementById('btn-resume');
+  const hasSaved=hasSavedGame();
+  card.style.display=hasSaved?'block':'none';
+  if(resumeBtn) resumeBtn.disabled=!hasSaved;
 }
 
 function resumeGame(){
@@ -1542,7 +1544,7 @@ function renderEditTabs(){
 
 function renderEditPanel(idx){
   const p=G.players[idx];
-  const rh=E.ri+1;
+  const rn=E.ri+1;
   const bonusRows=BONUSES.map(b=>`
     <div class="bonus-item">
       <div class="bonus-lbl">${b.label}</div>
