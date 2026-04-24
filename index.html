@@ -61,19 +61,27 @@ body{
 .hdr-sub{font-size:0.82rem;color:var(--text-muted);margin-top:2px}
 .hdr-back{
   position:absolute;left:6px;top:50%;transform:translateY(-50%);
+  background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text-muted);
+  padding:8px 12px;min-height:44px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;-webkit-tap-highlight-color:transparent;
+  transition:all 0.15s;border-radius:10px;
+}
+.hdr-back:active{color:var(--gold);background:var(--gold-dim);border-color:var(--gold)}
+.hdr-scorecard-btn{
+  position:absolute;right:6px;top:50%;transform:translateY(-50%);
   background:none;border:none;color:var(--text-muted);
-  font-size:1.25rem;padding:8px 10px;min-height:44px;min-width:44px;
+  font-size:1.3rem;padding:8px 10px;min-height:44px;min-width:44px;
   display:flex;align-items:center;justify-content:center;
   cursor:pointer;-webkit-tap-highlight-color:transparent;
   transition:color 0.15s;
 }
-.hdr-back:active{color:var(--gold)}
+.hdr-scorecard-btn:active{color:var(--gold)}
 
 /* ── SCROLL CONTENT ── */
 .content{
   flex:1;
   min-height:0;
-  padding:18px 15px;
+  padding:18px 15px 90px 15px;
   overflow-y:auto;
   -webkit-overflow-scrolling:touch;
   overscroll-behavior:contain;
@@ -351,6 +359,19 @@ input[type=text]::placeholder{color:var(--text-muted)}
 .pos-red{color:var(--danger)}
 .pos-muted{color:var(--text-muted)}
 
+/* ── SCORECARD GRID ── */
+.scorecard-grid-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:14px;
+  background:var(--navy-card);border:1px solid var(--border);border-radius:var(--r);}
+.scorecard-round-icon-btn{
+  width:32px;height:32px;border-radius:50%;border:1.5px solid var(--text-muted);
+  background:transparent;color:var(--text-muted);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  transition:all 0.15s;padding:0;
+}
+.scorecard-round-icon-btn:active{
+  border-color:var(--gold);color:var(--gold);background:rgba(201,162,39,0.1);
+}
+
 /* ── STANDINGS TABLE ── */
 .stbl{width:100%;border-collapse:collapse;font-size:0.9rem}
 .stbl th{
@@ -398,6 +419,26 @@ input[type=text]::placeholder{color:var(--text-muted)}
   font-size:0.68rem;color:var(--text-muted);margin-top:4px;white-space:nowrap;
 }
 
+/* ── GAME HISTORY ── */
+.game-history-row{
+  background:var(--navy-card);border:1px solid var(--border);
+  border-radius:var(--r);padding:14px;margin-bottom:10px;
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+}
+.game-history-info{flex:1;min-width:0}
+.game-history-date{font-family:'Cinzel',serif;font-size:0.9rem;color:var(--text);font-weight:600}
+.game-history-details{font-size:0.8rem;color:var(--text-muted);margin-top:4px}
+.game-history-actions{display:flex;gap:6px;flex-shrink:0}
+.game-history-btn{
+  width:40px;height:40px;border-radius:50%;border:1px solid var(--border);
+  background:transparent;color:var(--text-muted);font-size:1.1rem;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  transition:all 0.15s;
+}
+.game-history-btn:active{background:var(--gold-dim);border-color:var(--gold);color:var(--gold)}
+.game-history-btn.delete:active{background:rgba(192,57,43,0.15);border-color:var(--danger);color:var(--danger)}
+.game-history-empty{text-align:center;padding:28px 14px;color:var(--text-muted);font-style:italic}
+
 /* ── FINAL SCREEN ── */
 .winner-box{
   text-align:center;padding:28px 18px;
@@ -425,7 +466,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
 }
 .mt4{margin-top:4px}.mt8{margin-top:8px}.mt12{margin-top:12px}
 .mt16{margin-top:16px}.mt20{margin-top:20px}.mb12{margin-bottom:12px}
-.tc{text-align:center}.safe{height:28px}
+.tc{text-align:center}.safe{height:0px}
 
 /* ── ANIMATIONS ── */
 @keyframes sway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
@@ -433,9 +474,27 @@ input[type=text]::placeholder{color:var(--text-muted)}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .fadein{animation:fadeUp 0.3s ease forwards}
 
+/* ── GAME HISTORY FOOTER ── */
+.game-history-footer{
+  position:fixed;bottom:0;left:0;right:0;
+  background:linear-gradient(180deg,#050d1e 0%,#0a1628 100%);
+  padding:14px 18px 18px;z-index:200;
+  display:flex;justify-content:center;
+  border-top:1.5px solid var(--gold-dim);
+}
+.game-history-footer-btn{
+  display:flex;flex-direction:column;align-items:center;gap:5px;
+  padding:10px 18px;border-radius:10px;border:1px solid var(--border);
+  background:var(--navy-card);color:var(--text-muted);
+  cursor:pointer;transition:all 0.15s;min-height:50px;
+}
+.game-history-footer-btn:active{
+  background:var(--gold-dim);border-color:var(--gold);color:var(--gold-bright);
+}
+
 /* ── TOAST ── */
 .toast{
-  position:fixed;bottom:76px;left:50%;
+  position:fixed;bottom:90px;left:50%;
   transform:translateX(-50%) translateY(90px);
   background:rgba(14,28,54,0.96);border:1px solid var(--gold-dim);
   border-radius:20px;padding:9px 20px;font-size:0.88rem;color:var(--text);
@@ -626,8 +685,9 @@ input[type=text]::placeholder{color:var(--text-muted)}
 <div id="s-bid" class="screen">
   <div class="hdr">
     <button class="hdr-back" onclick="goBack()" title="Back">&#8592;</button>
-    <h1>SKULL KING</h1>
+    <h1>BIDS</h1>
     <div class="hdr-sub" id="bid-badge">Round 1 of 10</div>
+    <button class="hdr-scorecard-btn" onclick="showScorecardFromBid()" title="View Scorecard" style="display:flex;align-items:center;justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"></line><rect x="4" y="12" width="3" height="10"></rect><rect x="15" y="5" width="3" height="17"></rect><rect x="9.5" y="8" width="3" height="14"></rect></svg></button>
   </div>
   <div class="content">
     <div class="tc mb12">
@@ -649,8 +709,9 @@ input[type=text]::placeholder{color:var(--text-muted)}
 <div id="s-score" class="screen">
   <div class="hdr">
     <button class="hdr-back" onclick="goBack()" title="Back">&#8592;</button>
-    <h1>SKULL KING</h1>
+    <h1>SCORES</h1>
     <div class="hdr-sub" id="sc-badge">Round 1 — Enter Scores</div>
+    <button class="hdr-scorecard-btn" onclick="showScorecardFromScore()" title="View Scorecard" style="display:flex;align-items:center;justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"></line><rect x="4" y="12" width="3" height="10"></rect><rect x="15" y="5" width="3" height="17"></rect><rect x="9.5" y="8" width="3" height="14"></rect></svg></button>
   </div>
   <div class="content">
     <div class="mb12"><span class="pill" id="sc-pill">ROUND 1</span></div>
@@ -661,25 +722,34 @@ input[type=text]::placeholder{color:var(--text-muted)}
 </div>
 
 <!-- ════════════════════════════════════════════════════════ -->
-<!--  SCREEN: ROUND SCOREBOARD                              -->
+<!--  SCREEN: SCORECARD                                     -->
 <!-- ════════════════════════════════════════════════════════ -->
-<div id="s-board" class="screen">
+<div id="s-scorecard" class="screen">
   <div class="hdr">
     <button class="hdr-back" onclick="goBack()" title="Back">&#8592;</button>
-    <h1>SKULL KING</h1>
-    <div class="hdr-sub" id="board-badge">After Round 1</div>
+    <h1>SCORECARD</h1>
+    <div class="hdr-sub" id="scorecard-badge">After Round 1</div>
   </div>
   <div class="content">
-    <div class="card">
-      <div class="card-title">Standings</div>
-      <div class="stbl-wrap">
-        <table class="stbl" id="standings"></table>
-      </div>
+    <div class="scorecard-grid-wrap">
+      <div id="scorecard-grid"></div>
     </div>
-    <button class="btn btn-primary mt12" onclick="nextRound()" id="btn-next">⛵ Next Round</button>
-    <div style="margin-top:10px">
-      <button class="btn btn-ghost" style="width:100%;font-size:0.82rem" onclick="confirmNewGame()">↩ New Game</button>
-    </div>
+    <div class="safe"></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!--  SCREEN: GAME HISTORY                                  -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div id="s-game-history" class="screen">
+  <div class="hdr">
+    <button class="hdr-back" onclick="goBack()" title="Back">&#8592;</button>
+    <h1>GAME HISTORY</h1>
+    <div class="hdr-sub">Past Games</div>
+  </div>
+  <div class="content">
+    <div id="game-history-grid"></div>
+    <button class="btn btn-primary mt16" onclick="startNewGameFromHistory()">+ Start New Game</button>
     <div class="safe"></div>
   </div>
 </div>
@@ -754,6 +824,14 @@ input[type=text]::placeholder{color:var(--text-muted)}
   </div>
 </div>
 
+<!-- ── GAME HISTORY FOOTER ── -->
+<div class="game-history-footer" id="game-history-footer">
+  <button class="game-history-footer-btn" onclick="showGameHistory()" title="Game History">
+    <span style="display:flex;align-items:center;justify-content:center;width:20px;height:20px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg></span>
+    <span style="font-size:0.75rem;font-family:'Cinzel',serif;letter-spacing:0.4px;">HISTORY</span>
+  </button>
+</div>
+
 <!-- ── CONFIRM DIALOG ── -->
 <div class="overlay" id="confirm-overlay">
   <div class="dialog">
@@ -799,35 +877,136 @@ const G = {
   bidIdx:0, tempBids:[],
   tempTricks:[], tempBonuses:[],
   scTab:0,
+  gameId:null,  // Used to track game history - null for new game, ID for resumed game
 };
 
+// ── Screen names for back button ──────────────────────────
+const SCREEN_NAMES={
+  's-setup':'Home',
+  's-bid':'Bidding',
+  's-score':'Scoring',
+  's-scorecard':'Scorecard',
+  's-final':'Results',
+  's-edit':'Edit',
+  's-game-history':'History'
+};
+
+function getScreenName(id){
+  return SCREEN_NAMES[id]||'Back';
+}
+
 // ── Screen helper ──────────────────────────────────────────
-// ──  Navigation History ───────────────────────────────────
-let _navHistory=['s-setup'];
+// ──  Context-based Navigation ──────────────────────────────
+let _previousScreen=null;  // Track where we came from for special cases
 
 function show(id){
-  // Auto-save game state if game is in progress
-  if(G.players.length>0 && id!=='s-setup' && id!=='s-final'){
+  // Auto-save game state if game is in progress (including when viewing scorecard to preserve temp bids/scores)
+  if(G.players.length>0 && id!=='s-setup' && id!=='s-final' && id!=='s-game-history'){
     saveGameState();
   }
-  // Don't add duplicates to history (e.g., if already on same screen)
-  if(_navHistory[_navHistory.length-1]!==id){
-    _navHistory.push(id);
+
+  // Track previous screen for special back button cases (history and scorecard buttons)
+  const currentScreen=document.querySelector('.screen.active');
+  if(currentScreen && (id==='s-game-history' || id==='s-scorecard')){
+    _previousScreen=currentScreen.id;
   }
+
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
+  updateBackButton();
+  updateFooterVisibility();
   window.scrollTo(0,0);
 }
 
+function updateBackButton(){
+  const backBtn=document.querySelector('.hdr-back');
+  if(!backBtn) return;
+
+  const currentScreen=document.querySelector('.screen.active').id;
+  let backTarget=null;
+  let backLabel='Back';
+
+  // Context-based back button destinations
+  if(currentScreen==='s-bid'){
+    backTarget='s-scorecard';
+    backLabel='Scorecard';
+  } else if(currentScreen==='s-score'){
+    backTarget='s-bid';
+    backLabel='Bidding';
+  } else if(currentScreen==='s-edit'){
+    backTarget='s-scorecard';
+    backLabel='Scorecard';
+  } else if(currentScreen==='s-scorecard' && _previousScreen){
+    // Return to where we came from if accessed via history or scorecard button
+    backTarget=_previousScreen;
+    backLabel=getScreenName(_previousScreen);
+  } else if(currentScreen==='s-game-history' && _previousScreen){
+    // Return to where we came from via history button
+    backTarget=_previousScreen;
+    backLabel=getScreenName(_previousScreen);
+  }
+
+  // Render the back button
+  if(backTarget){
+    backBtn.innerHTML=`<span style="display:flex;align-items:center;gap:6px;cursor:pointer;" onclick="goBack()">${SVG_ICONS.backArrow} <span style="font-size:0.8rem;font-family:'Cinzel',serif;letter-spacing:0.4px;font-weight:600;">${backLabel}</span></span>`;
+  } else {
+    backBtn.innerHTML=`<span style="display:flex;align-items:center;">${SVG_ICONS.backArrow}</span>`;
+  }
+}
+
+function updateFooterVisibility(){
+  const currentScreen=document.querySelector('.screen.active').id;
+  const footer=document.getElementById('game-history-footer');
+  if(!footer) return;
+
+  // Hide footer on setup, game history, and final screens
+  if(currentScreen==='s-setup' || currentScreen==='s-game-history' || currentScreen==='s-final'){
+    footer.style.display='none';
+  } else if(G.players.length>0){
+    // Show footer during active game
+    footer.style.display='flex';
+  } else {
+    footer.style.display='none';
+  }
+}
+
 function goBack(){
-  if(_navHistory.length>1){
-    _navHistory.pop(); // Remove current screen
-    const prevScreen=_navHistory[_navHistory.length-1];
+  const currentScreen=document.querySelector('.screen.active').id;
+  let destination=null;
+
+  // Context-based back navigation
+  if(currentScreen==='s-bid'){
+    destination='s-scorecard';
+  } else if(currentScreen==='s-score'){
+    destination='s-bid';
+  } else if(currentScreen==='s-edit'){
+    destination='s-scorecard';
+  } else if(currentScreen==='s-scorecard' && _previousScreen){
+    destination=_previousScreen;
+    _previousScreen=null;  // Reset after using
+  } else if(currentScreen==='s-game-history' && _previousScreen){
+    destination=_previousScreen;
+    _previousScreen=null;  // Reset after using
+  }
+
+  if(destination){
     document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-    document.getElementById(prevScreen).classList.add('active');
+    document.getElementById(destination).classList.add('active');
+    updateBackButton();
+    updateFooterVisibility();
     window.scrollTo(0,0);
   }
 }
+
+// ── SVG Icons ──────────────────────────────────────────────
+const SVG_ICONS={
+  backArrow:`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>`,
+  play:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>`,
+  pencil:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>`,
+  barChart:`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"></line><rect x="4" y="12" width="3" height="10"></rect><rect x="15" y="5" width="3" height="17"></rect><rect x="9.5" y="8" width="3" height="14"></rect></svg>`,
+  clipboard:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>`,
+  trash:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>`
+};
 
 // ── Toast ──────────────────────────────────────────────────
 let _tt;
@@ -864,6 +1043,57 @@ function hasSavedGame(){
 }
 function deleteSavedGame(){
   localStorage.removeItem('skullKingGameState');
+}
+
+// ── Game History (multiple saved games) ────────────────────
+function getGameHistory(){
+  try{return JSON.parse(localStorage.getItem('skullKingHistory')||'[]');}catch{return [];}
+}
+function saveToGameHistory(){
+  const history=getGameHistory();
+
+  if(G.gameId){
+    // Update existing game (being resumed)
+    const existingGameIndex=history.findIndex(h=>h.id===G.gameId);
+    if(existingGameIndex>=0){
+      history[existingGameIndex].lastPlayed=new Date().toISOString();
+      history[existingGameIndex].roundsCompleted=G.round-1;
+      history[existingGameIndex].gameState=JSON.stringify(G);
+      // Move to top
+      const game=history.splice(existingGameIndex,1)[0];
+      history.unshift(game);
+    }
+  } else {
+    // New game
+    G.gameId=Date.now();
+    const gameSnapshot={
+      id:G.gameId,
+      lastPlayed:new Date().toISOString(),
+      playerCount:G.players.length,
+      playerNames:G.players.map(p=>p.name),
+      roundsCompleted:G.round-1,
+      totalRounds:G.rounds,
+      gameState:JSON.stringify(G)
+    };
+    history.unshift(gameSnapshot);
+  }
+  localStorage.setItem('skullKingHistory',JSON.stringify(history));
+}
+function resumeGame(id){
+  const history=getGameHistory();
+  const game=history.find(g=>g.id===id);
+  if(!game) return false;
+  try{
+    const restored=JSON.parse(game.gameState);
+    Object.assign(G,restored);
+    G.gameId=id;  // Set gameId so we know to update this game instead of creating a new one
+    return true;
+  }catch{return false;}
+}
+function deleteGameFromHistory(id){
+  let history=getGameHistory();
+  history=history.filter(g=>g.id!==id);
+  localStorage.setItem('skullKingHistory',JSON.stringify(history));
 }
 
 function renderSavedChips(){
@@ -922,17 +1152,11 @@ function initSetup(){
   document.getElementById('rnds-val').textContent='10';
   renderPlist();
   renderSavedChips();
+  updateBackButton();
 }
 
 function handleStartGame(){
-  if(hasSavedGame()){
-    if(confirm('You have a game in progress. Starting a new game will delete your saved progress. Continue?')){
-      deleteSavedGame();
-      startGame();
-    }
-  } else {
-    startGame();
-  }
+  startGame();
 }
 
 function renderPlist(){
@@ -1111,6 +1335,7 @@ function startGame(){
   const names=sPlayers.map((n,i)=>n.trim()||`Player ${i+1}`);
   G.players=names.map(name=>({name,scores:[],bids:[],tricks:[],bonuses:[],bonusData:[]}));
   G.round=1;
+  _navHistory=['s-bid'];
   startRound();
 }
 
@@ -1130,6 +1355,30 @@ function startRound(){
 // ══════════════════════════════════════════════════════════
 //  BID SCREEN
 // ══════════════════════════════════════════════════════════
+function startPlayingRound(roundNum){
+  const n=G.players.length;
+
+  // If switching to a different round, reset temp arrays
+  if(G.round!==roundNum){
+    G.tempBids=new Array(n).fill(0);
+    G.tempTricks=new Array(n).fill(0);
+    G.tempBonuses=G.players.map(()=>Object.fromEntries(BONUSES.map(b=>[b.key,0])));
+  }
+
+  // Set the current round to the specified round number
+  G.round=roundNum;
+
+  // Only initialize temp arrays if they don't exist (preserves bids if navigating away and coming back to same round)
+  if(!G.tempBids || G.tempBids.length===0){
+    G.tempBids=new Array(n).fill(0);
+    G.tempTricks=new Array(n).fill(0);
+    G.tempBonuses=G.players.map(()=>Object.fromEntries(BONUSES.map(b=>[b.key,0])));
+  }
+
+  // Show the bid screen for this round
+  showBidScreen();
+}
+
 function showBidScreen(){
   document.getElementById('bid-badge').textContent=`Round ${G.round} of ${G.rounds}`;
   document.getElementById('bid-pill').textContent=`ROUND ${G.round}`;
@@ -1324,20 +1573,27 @@ function updatePreview(idx){
 //  CALCULATE & SAVE SCORES
 // ══════════════════════════════════════════════════════════
 function calcScores(){
-  G.players.forEach((p,idx)=>{
-    const bid=G.tempBids[idx];
-    const tricks=G.tempTricks[idx];
-    const raw={...G.tempBonuses[idx]};
-    const bonus=BONUSES.reduce((s,b)=>s+b.pts*raw[b.key],0);
-    const sc=calcScore(bid,tricks,bonus,G.round,G.mode);
-    p.bids.push(bid);
-    p.tricks.push(tricks);
-    p.bonuses.push(bonus);
-    p.bonusData.push(raw);
-    p.scores.push(sc);
-  });
-  saveGameState();
-  showBoard();
+  try{
+    G.players.forEach((p,idx)=>{
+      const bid=G.tempBids[idx];
+      const tricks=G.tempTricks[idx];
+      const raw={...G.tempBonuses[idx]};
+      const bonus=BONUSES.reduce((s,b)=>s+b.pts*raw[b.key],0);
+      const sc=calcScore(bid,tricks,bonus,G.round,G.mode);
+      p.bids.push(bid);
+      p.tricks.push(tricks);
+      p.bonuses.push(bonus);
+      p.bonusData.push(raw);
+      p.scores.push(sc);
+    });
+    saveGameState();
+    document.getElementById('scorecard-badge').textContent=`After Round ${G.round}`;
+    buildScorecardGrid(G.round);  // Show current round only, not next round
+    show('s-scorecard');
+  }catch(e){
+    console.error('calcScores error:',e);
+    toast('Error calculating scores');
+  }
 }
 
 function total(p){return p.scores.reduce((a,b)=>a+b,0)}
@@ -1345,12 +1601,106 @@ function total(p){return p.scores.reduce((a,b)=>a+b,0)}
 // ══════════════════════════════════════════════════════════
 //  ROUND SCOREBOARD
 // ══════════════════════════════════════════════════════════
+function showScorecardFromBid(){
+  showScorecard();
+}
+
+function showScorecardFromScore(){
+  showScorecard();
+}
+
+function showScorecard(){
+  const isLast=G.round>=G.rounds;
+  document.getElementById('scorecard-badge').textContent=`After Round ${G.round}`;
+  buildScorecardGrid(G.round);
+  show('s-scorecard');
+}
+
+
+function buildScorecardGrid(currentRound){
+  const grid=document.getElementById('scorecard-grid');
+  const stand=[...G.players].sort((a,b)=>total(b)-total(a));
+
+  // Build scorecard as a table showing all rounds
+  let html=`<table class="scorecard-table" style="width:100%;border-collapse:collapse;">
+    <thead><tr>
+      <th style="text-align:left;padding:12px 8px;font-size:0.75rem;color:var(--gold);text-transform:uppercase;letter-spacing:0.8px;border-bottom:1px solid var(--border);">Round</th>`;
+
+  // Player headers
+  stand.forEach(p=>{
+    html+=`<th style="padding:12px 8px;font-size:0.75rem;color:var(--gold);text-transform:uppercase;letter-spacing:0.8px;text-align:center;border-bottom:1px solid var(--border);min-width:90px;white-space:nowrap;">${p.name}</th>`;
+  });
+
+  html+=`</tr></thead><tbody>`;
+
+  // Show all rounds (1 to G.rounds), not just current round
+  const currentRoundHasBeenScored=G.players[0].scores[currentRound-1]!==undefined;
+
+  for(let r=1;r<=G.rounds;r++){
+    html+=`<tr style="border-bottom:1px solid rgba(255,255,255,0.05);${r>currentRound?'opacity:0.6;':''} ">
+      <td style="text-align:left;padding:10px 8px;font-weight:600;font-family:'Cinzel',serif;font-size:0.9rem;">
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span>R${r}</span>`;
+
+    // Icon for this round
+    if(r<currentRound){
+      // Past round - show pencil icon to edit
+      html+=`<button class="scorecard-round-icon-btn" onclick="openEditRound(${r},'s-scorecard')" title="Edit Round ${r}" style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;">${SVG_ICONS.pencil}</button>`;
+    } else if(r===currentRound && currentRoundHasBeenScored){
+      // Current round is completed - show pencil icon to edit
+      html+=`<button class="scorecard-round-icon-btn" onclick="openEditRound(${r},'s-scorecard')" title="Edit Round ${r}" style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;">${SVG_ICONS.pencil}</button>`;
+    } else if(r===currentRound && !currentRoundHasBeenScored){
+      // Current round not yet scored - show play icon on current round
+      html+=`<button class="scorecard-round-icon-btn" onclick="startPlayingRound(${r})" title="Play Round ${r}" style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;">${SVG_ICONS.play}</button>`;
+    } else if(r===currentRound+1 && currentRoundHasBeenScored && r<=G.rounds){
+      // Next round to play - show play icon
+      html+=`<button class="scorecard-round-icon-btn" onclick="startPlayingRound(${r})" title="Play Round ${r}" style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;">${SVG_ICONS.play}</button>`;
+    }
+    // All other future rounds - no icon
+
+    html+=`</div></td>`;
+
+    // Player scores for this round
+    stand.forEach(p=>{
+      if(p.scores[r-1]!==undefined){
+        const sc=p.scores[r-1];
+        const bid=p.bids[r-1];
+        const tricks=p.tricks[r-1];
+        const hit=bid===tricks;
+        const sign=sc>0?'+':'';
+        const cls=sc>0?'color:var(--success)':sc<0?'color:var(--danger)':'color:var(--text-muted)';
+        const hitMark=hit?'✓':'✗';
+        html+=`<td style="padding:10px 6px;text-align:center;border-bottom:1px solid rgba(255,255,255,0.05);">
+          <div style="font-family:'Cinzel',serif;font-size:0.95rem;font-weight:700;${cls};">${sign}${sc}</div>
+          <div style="font-size:0.65rem;color:var(--text-muted);margin-top:2px;">${bid}-${tricks}${hitMark}</div>
+        </td>`;
+      } else {
+        html+=`<td style="padding:10px 6px;text-align:center;border-bottom:1px solid rgba(255,255,255,0.05);">—</td>`;
+      }
+    });
+
+    html+=`</tr>`;
+  }
+
+  // Total row
+  html+=`<tr style="border-top:2px solid var(--gold-dim);">
+    <td style="text-align:left;padding:12px 8px;font-weight:700;font-family:'Cinzel',serif;color:var(--gold);border-top:2px solid var(--gold-dim);">TOTAL</td>`;
+  stand.forEach(p=>{
+    const tot=total(p);
+    html+=`<td style="padding:12px 6px;text-align:center;font-weight:700;color:var(--gold-bright);font-family:'Cinzel',serif;border-top:2px solid var(--gold-dim);">${tot}</td>`;
+  });
+
+  html+=`</tr></tbody></table>`;
+
+  grid.innerHTML=html;
+}
+
 function showBoard(){
   const isLast=G.round>=G.rounds;
-  document.getElementById('board-badge').textContent=`After Round ${G.round}`;
+  document.getElementById('scorecard-badge').textContent=`After Round ${G.round}`;
   document.getElementById('btn-next').textContent=isLast?'Final Results':'Next Round';
-  buildStandingsTable('standings',G.round);
-  show('s-board');
+  buildScorecardGrid(G.round);
+  show('s-scorecard');
 }
 
 function buildStandingsTable(id,numRounds){
@@ -1401,8 +1751,8 @@ function buildStandingsTable(id,numRounds){
 }
 
 function nextRound(){
-  if(G.round>=G.rounds){ showFinal(); return; }
-  G.round++;
+  G.round++;  // Move to next round
+  if(G.round>G.rounds){ showFinal(); return; }
   saveGameState();
   startRound();
 }
@@ -1459,7 +1809,8 @@ function showFinal(){
     </table>
   `;
 
-  // Clear saved game since the game is complete
+  // Save game to history and clear current game state since the game is complete
+  saveToGameHistory();
   localStorage.removeItem('skullKingGameState');
   show('s-final');
 }
@@ -1602,8 +1953,10 @@ function saveEditRound(){
     p.bonusData[ri]=raw;
     p.scores[ri]=sc;
   });
+  saveGameState();
   toast('✓ Round updated');
   if(E.from==='s-final'){ showFinal(); }
+  else if(E.from==='s-scorecard'){ showScorecard(); }
   else { showBoard(); }
 }
 
@@ -1612,17 +1965,77 @@ function cancelEdit(){
 }
 
 // ══════════════════════════════════════════════════════════
-//  NEW GAME CONFIRM
+//  GAME HISTORY & NEW GAME
 // ══════════════════════════════════════════════════════════
-function confirmNewGame(){
-  // If we're on setup or final, just go directly
-  const active=document.querySelector('.screen.active').id;
-  if(active==='s-setup'||active==='s-final'){ doNewGame(); return; }
-  document.getElementById('confirm-overlay').classList.add('show');
+function showGameHistory(){
+  saveToGameHistory();
+  renderGameHistory();
+  show('s-game-history');
 }
+
+function renderGameHistory(){
+  const history=getGameHistory();
+  const grid=document.getElementById('game-history-grid');
+
+  if(history.length===0){
+    grid.innerHTML='<div class="game-history-empty">No previous games yet. Start your first game above!</div>';
+    return;
+  }
+
+  grid.innerHTML='';
+  history.forEach(game=>{
+    const date=new Date(game.lastPlayed);
+    const dateStr=date.toLocaleDateString()+' '+date.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+    const row=document.createElement('div');
+    row.className='game-history-row';
+    row.style.cursor='pointer';
+    row.innerHTML=`
+      <div class="game-history-info">
+        <div class="game-history-date">${game.playerNames.join(', ')}</div>
+        <div class="game-history-details">
+          ${game.playerCount} players • Round ${game.roundsCompleted}/${game.totalRounds}
+        </div>
+        <div class="game-history-details" style="color:var(--text-muted);font-size:0.75rem;margin-top:2px">
+          ${dateStr}
+        </div>
+      </div>
+      <div class="game-history-actions">
+        <button class="game-history-btn delete" onclick="event.stopPropagation(); deleteGameAndRefresh(${game.id})" title="Delete"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></button>
+      </div>
+    `;
+    row.onclick=()=>resumeGameFromHistory(game.id);
+    grid.appendChild(row);
+  });
+}
+
+function resumeGameFromHistory(id){
+  if(resumeGame(id)){
+    _navHistory=['s-bid'];
+    showScorecard();
+  } else {
+    toast('Failed to resume game');
+  }
+}
+
+function deleteGameAndRefresh(id){
+  deleteGameFromHistory(id);
+  renderGameHistory();
+}
+
+function startNewGameFromHistory(){
+  initSetup();
+  show('s-setup');
+}
+
+function confirmNewGame(){
+  saveToGameHistory();
+  showGameHistory();
+}
+
 function closeConfirm(){
   document.getElementById('confirm-overlay').classList.remove('show');
 }
+
 function doNewGame(){
   closeConfirm();
   initSetup();
