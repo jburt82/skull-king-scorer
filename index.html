@@ -478,18 +478,22 @@ input[type=text]::placeholder{color:var(--text-muted)}
 .game-history-footer{
   position:fixed;bottom:0;left:0;right:0;
   background:linear-gradient(180deg,#050d1e 0%,#0a1628 100%);
-  padding:14px 18px 18px;z-index:200;
-  display:flex;justify-content:center;
+  padding:10px 18px 14px;z-index:200;
+  display:flex;justify-content:space-between;align-items:center;
   border-top:1.5px solid var(--gold-dim);
 }
 .game-history-footer-btn{
-  display:flex;flex-direction:column;align-items:center;gap:5px;
-  padding:10px 18px;border-radius:10px;border:1px solid var(--border);
-  background:var(--navy-card);color:var(--text-muted);
-  cursor:pointer;transition:all 0.15s;min-height:50px;
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  padding:6px 12px;border-radius:8px;border:none;
+  background:transparent;color:var(--text-muted);
+  cursor:pointer;transition:all 0.15s;
+  font-size:0.7rem;font-family:'Cinzel',serif;letter-spacing:0.3px;
 }
 .game-history-footer-btn:active{
-  background:var(--gold-dim);border-color:var(--gold);color:var(--gold-bright);
+  background:transparent;color:var(--gold-bright);
+}
+.footer-icon{
+  display:flex;align-items:center;justify-content:center;width:18px;height:18px;
 }
 
 /* ── TOAST ── */
@@ -684,18 +688,12 @@ input[type=text]::placeholder{color:var(--text-muted)}
 <!-- ════════════════════════════════════════════════════════ -->
 <div id="s-bid" class="screen">
   <div class="hdr">
-    <button class="hdr-back" onclick="goBack()" title="Back">&#8592;</button>
     <h1>BIDS</h1>
-    <div class="hdr-sub" id="bid-badge">Round 1 of 10</div>
-    <button class="hdr-scorecard-btn" onclick="showScorecardFromBid()" title="View Scorecard" style="display:flex;align-items:center;justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"></line><rect x="4" y="12" width="3" height="10"></rect><rect x="15" y="5" width="3" height="17"></rect><rect x="9.5" y="8" width="3" height="14"></rect></svg></button>
+    <div class="hdr-sub">Everyone sets their bid, then tap Start Scoring</div>
   </div>
   <div class="content">
     <div class="tc mb12">
       <span class="pill" id="bid-pill">ROUND 1</span>
-    </div>
-    <div class="bid-intro">
-      <div class="bid-cards-lbl" id="bid-cards-lbl">Cards in hand this round: 1</div>
-      <div style="font-size:0.82rem;color:var(--text-muted);margin-top:5px">Everyone sets their bid, then tap Start Scoring</div>
     </div>
     <div id="bid-player-cards"></div>
     <button class="btn btn-primary mt8" onclick="submitBids()">Start Scoring</button>
@@ -708,10 +706,8 @@ input[type=text]::placeholder{color:var(--text-muted)}
 <!-- ════════════════════════════════════════════════════════ -->
 <div id="s-score" class="screen">
   <div class="hdr">
-    <button class="hdr-back" onclick="goBack()" title="Back">&#8592;</button>
     <h1>SCORES</h1>
     <div class="hdr-sub" id="sc-badge">Round 1 — Enter Scores</div>
-    <button class="hdr-scorecard-btn" onclick="showScorecardFromScore()" title="View Scorecard" style="display:flex;align-items:center;justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"></line><rect x="4" y="12" width="3" height="10"></rect><rect x="15" y="5" width="3" height="17"></rect><rect x="9.5" y="8" width="3" height="14"></rect></svg></button>
   </div>
   <div class="content">
     <div class="mb12"><span class="pill" id="sc-pill">ROUND 1</span></div>
@@ -726,7 +722,6 @@ input[type=text]::placeholder{color:var(--text-muted)}
 <!-- ════════════════════════════════════════════════════════ -->
 <div id="s-scorecard" class="screen">
   <div class="hdr">
-    <button class="hdr-back" onclick="goBack()" title="Back">&#8592;</button>
     <h1>SCORECARD</h1>
     <div class="hdr-sub" id="scorecard-badge">After Round 1</div>
   </div>
@@ -788,7 +783,6 @@ input[type=text]::placeholder{color:var(--text-muted)}
 <!-- ════════════════════════════════════════════════════════ -->
 <div id="s-edit" class="screen">
   <div class="hdr">
-    <button class="hdr-back" onclick="cancelEdit()" title="Cancel Edit">&#8592;</button>
     <h1>SKULL KING</h1>
     <div class="hdr-sub" id="edit-badge">Editing Round 1</div>
   </div>
@@ -826,9 +820,22 @@ input[type=text]::placeholder{color:var(--text-muted)}
 
 <!-- ── GAME HISTORY FOOTER ── -->
 <div class="game-history-footer" id="game-history-footer">
+  <!-- Left: History -->
   <button class="game-history-footer-btn" onclick="showGameHistory()" title="Game History">
-    <span style="display:flex;align-items:center;justify-content:center;width:20px;height:20px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg></span>
-    <span style="font-size:0.75rem;font-family:'Cinzel',serif;letter-spacing:0.4px;">HISTORY</span>
+    <span class="footer-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg></span>
+    <span>HISTORY</span>
+  </button>
+
+  <!-- Center: New Game -->
+  <button class="game-history-footer-btn" onclick="confirmNewGame()" title="New Game">
+    <span class="footer-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 Q 5 8 5 12 Q 5 16 12 22 Q 19 16 19 12 Q 19 8 12 2" fill="currentColor" opacity="0.2"></path><rect x="3" y="8" width="6" height="9" rx="0.5" transform="rotate(-25 6 12.5)"></rect><rect x="8" y="6" width="6" height="9" rx="0.5"></rect><rect x="13" y="8" width="6" height="9" rx="0.5" transform="rotate(25 16 12.5)"></rect></svg></span>
+    <span>New Game</span>
+  </button>
+
+  <!-- Right: Scorecard/Scores -->
+  <button class="game-history-footer-btn" onclick="showScorecard()" title="View Scores">
+    <span class="footer-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"></line><rect x="4" y="12" width="3" height="10"></rect><rect x="15" y="5" width="3" height="17"></rect><rect x="9.5" y="8" width="3" height="14"></rect></svg></span>
+    <span>SCORES</span>
   </button>
 </div>
 
@@ -855,11 +862,11 @@ input[type=text]::placeholder{color:var(--text-muted)}
 // ── Bonus definitions ──────────────────────────────────────
 const BONUSES = [
   {key:'msk',   label:'💀 SK Captured by Mermaid',         pts:40, max:1},
-  {key:'psk',   label:'⚔️ Special Capture',               pts:30, max:5},
-  {key:'mp',    label:'🧜 Mermaid Captured by Pirate',          pts:20, max:2},
-  {key:'b14',   label:'🏴 Black 14 Flag',               pts:20, max:1},
-  {key:'c14',   label:'🚩 Colored 14 Flag (each)',      pts:10, max:3},
-  {key:'other', label:'🪙 Other (each)',                pts:10, max:5},
+  {key:'psk',   label:'⚔️ Pirate Captured by SK',               pts:30, max:1},
+  {key:'mp',    label:'🧜 Mermaid Captured by Pirate',          pts:20, max:1},
+  {key:'b14',   label:'⬛ Black 14 Card',               pts:20, max:1},
+  {key:'c14',   label:'🟥 Colored 14 Card(s)',      pts:10, max:3},
+  {key:'other', label:'💰 Loot',                pts:20, max:1},
 ];
 
 const ICONS = ['🦜','⚓','🗡️','🏴‍☠️','💀','🐚'];
@@ -965,6 +972,18 @@ function updateFooterVisibility(){
   } else if(G.players.length>0){
     // Show footer during active game
     footer.style.display='flex';
+    // Disable history button if no games in history
+    const history=getGameHistory();
+    const historyBtn=footer.querySelector('button:first-child');
+    if(history.length===0 && historyBtn){
+      historyBtn.style.opacity='0.5';
+      historyBtn.style.pointerEvents='none';
+      historyBtn.title='No previous games yet';
+    } else if(historyBtn){
+      historyBtn.style.opacity='1';
+      historyBtn.style.pointerEvents='auto';
+      historyBtn.title='Game History';
+    }
   } else {
     footer.style.display='none';
   }
@@ -1057,6 +1076,10 @@ function saveToGameHistory(){
     const existingGameIndex=history.findIndex(h=>h.id===G.gameId);
     if(existingGameIndex>=0){
       history[existingGameIndex].lastPlayed=new Date().toISOString();
+      // Ensure gameStarted is set (for backwards compatibility with old games)
+      if(!history[existingGameIndex].gameStarted){
+        history[existingGameIndex].gameStarted=history[existingGameIndex].lastPlayed;
+      }
       history[existingGameIndex].roundsCompleted=G.round-1;
       history[existingGameIndex].gameState=JSON.stringify(G);
       // Move to top
@@ -1066,9 +1089,11 @@ function saveToGameHistory(){
   } else {
     // New game
     G.gameId=Date.now();
+    const now=new Date().toISOString();
     const gameSnapshot={
       id:G.gameId,
-      lastPlayed:new Date().toISOString(),
+      gameStarted:now,
+      lastPlayed:now,
       playerCount:G.players.length,
       playerNames:G.players.map(p=>p.name),
       roundsCompleted:G.round-1,
@@ -1148,6 +1173,7 @@ let sPlayers=[];
 function initSetup(){
   sPlayers=[];
   G.mode='classic'; G.rounds=10;
+  G.gameId=null;  // Reset gameId for new game
   selMode('classic');
   document.getElementById('rnds-val').textContent='10';
   renderPlist();
@@ -1335,7 +1361,6 @@ function startGame(){
   const names=sPlayers.map((n,i)=>n.trim()||`Player ${i+1}`);
   G.players=names.map(name=>({name,scores:[],bids:[],tricks:[],bonuses:[],bonusData:[]}));
   G.round=1;
-  _navHistory=['s-bid'];
   startRound();
 }
 
@@ -1343,8 +1368,6 @@ function startGame(){
 //  ROUND FLOW
 // ══════════════════════════════════════════════════════════
 function startRound(){
-  // Reset navigation history for new round
-  _navHistory=['s-bid'];
   const n=G.players.length;
   G.tempBids=new Array(n).fill(0);
   G.tempTricks=new Array(n).fill(0);
@@ -1380,9 +1403,7 @@ function startPlayingRound(roundNum){
 }
 
 function showBidScreen(){
-  document.getElementById('bid-badge').textContent=`Round ${G.round} of ${G.rounds}`;
   document.getElementById('bid-pill').textContent=`ROUND ${G.round}`;
-  document.getElementById('bid-cards-lbl').textContent=`Cards in hand this round: ${G.round}`;
   renderBidCards();
   show('s-bid');
 }
@@ -1587,6 +1608,7 @@ function calcScores(){
       p.scores.push(sc);
     });
     saveGameState();
+    saveToGameHistory();
     document.getElementById('scorecard-badge').textContent=`After Round ${G.round}`;
     buildScorecardGrid(G.round);  // Show current round only, not next round
     show('s-scorecard');
@@ -1636,6 +1658,15 @@ function buildScorecardGrid(currentRound){
   // Show all rounds (1 to G.rounds), not just current round
   const currentRoundHasBeenScored=G.players[0].scores[currentRound-1]!==undefined;
 
+  // Total row at top
+  html+=`<tr style="border-bottom:2px solid var(--gold-dim);">
+    <td style="text-align:left;padding:12px 8px;font-weight:700;font-family:'Cinzel',serif;color:var(--gold);border-bottom:2px solid var(--gold-dim);">TOTAL</td>`;
+  stand.forEach(p=>{
+    const tot=total(p);
+    html+=`<td style="padding:12px 6px;text-align:center;font-weight:700;color:var(--gold-bright);font-family:'Cinzel',serif;border-bottom:2px solid var(--gold-dim);">${tot}</td>`;
+  });
+  html+=`</tr>`;
+
   for(let r=1;r<=G.rounds;r++){
     html+=`<tr style="border-bottom:1px solid rgba(255,255,255,0.05);${r>currentRound?'opacity:0.6;':''} ">
       <td style="text-align:left;padding:10px 8px;font-weight:600;font-family:'Cinzel',serif;font-size:0.9rem;">
@@ -1682,15 +1713,7 @@ function buildScorecardGrid(currentRound){
     html+=`</tr>`;
   }
 
-  // Total row
-  html+=`<tr style="border-top:2px solid var(--gold-dim);">
-    <td style="text-align:left;padding:12px 8px;font-weight:700;font-family:'Cinzel',serif;color:var(--gold);border-top:2px solid var(--gold-dim);">TOTAL</td>`;
-  stand.forEach(p=>{
-    const tot=total(p);
-    html+=`<td style="padding:12px 6px;text-align:center;font-weight:700;color:var(--gold-bright);font-family:'Cinzel',serif;border-top:2px solid var(--gold-dim);">${tot}</td>`;
-  });
-
-  html+=`</tr></tbody></table>`;
+  html+=`</tbody></table>`;
 
   grid.innerHTML=html;
 }
@@ -1984,7 +2007,7 @@ function renderGameHistory(){
 
   grid.innerHTML='';
   history.forEach(game=>{
-    const date=new Date(game.lastPlayed);
+    const date=new Date(game.gameStarted||game.lastPlayed);
     const dateStr=date.toLocaleDateString()+' '+date.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
     const row=document.createElement('div');
     row.className='game-history-row';
@@ -1993,7 +2016,7 @@ function renderGameHistory(){
       <div class="game-history-info">
         <div class="game-history-date">${game.playerNames.join(', ')}</div>
         <div class="game-history-details">
-          ${game.playerCount} players • Round ${game.roundsCompleted}/${game.totalRounds}
+          ${game.playerCount} players • Round ${game.roundsCompleted + 1}/${game.totalRounds}
         </div>
         <div class="game-history-details" style="color:var(--text-muted);font-size:0.75rem;margin-top:2px">
           ${dateStr}
@@ -2010,7 +2033,6 @@ function renderGameHistory(){
 
 function resumeGameFromHistory(id){
   if(resumeGame(id)){
-    _navHistory=['s-bid'];
     showScorecard();
   } else {
     toast('Failed to resume game');
@@ -2029,7 +2051,8 @@ function startNewGameFromHistory(){
 
 function confirmNewGame(){
   saveToGameHistory();
-  showGameHistory();
+  initSetup();
+  show('s-setup');
 }
 
 function closeConfirm(){
@@ -2048,6 +2071,7 @@ function doNewGame(){
 //  BOOT
 // ══════════════════════════════════════════════════════════
 initSetup();
+show('s-setup');
 
 // ══════════════════════════════════════════════════════════
 //  SERVICE WORKER REGISTRATION
